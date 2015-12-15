@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+    <base href="/">
+
+    <title>eonRouter</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+
+    <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
+
+    <!-- build:css app.css -->
+
+    <!-- bower:css -->
+    <link rel="stylesheet" href="bower_components/angular-material/angular-material.css">
+    <!-- endinject -->
+
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
+    
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <link rel="stylesheet" href="styles/css/app.css">
+
+    <!-- endbuild -->
+
+  </head>
+  <body>
+
+    <div ng-controller="AppCtrl as vm" ng-cloak flex layout="row">
+        <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="menu_principal">
+          <md-toolbar>
+            <h1 class="md-toolbar-tools">Menu Principal</h1>
+          </md-toolbar>
+          <md-content layout="column">
+                <md-button href="/">
+                  Incio
+                </md-button>
+                <md-button href="/publicaciones/martin">
+                  Publicaciones
+                </md-button>
+                <md-button href="/otro/error">
+                  Error
+                </md-button>
+          </md-content>
+        </md-sidenav>
+        <md-content layout="column" flex>
+            <md-toolbar>
+              <div class="md-toolbar-tools">
+                <md-button ng-click="vm.toggleMenu()" aria-label="Atras">
+                  Menu
+                </md-button>
+                <h2>
+                  <span>{{ vm.titulo }}</span>
+                </h2>
+                <span flex></span>
+                <md-button class="md-raised" ng-click="vm.viewState($event)" aria-label="Learn More">
+                  Uno
+                </md-button>
+                <md-button class="md-fab md-mini" ng-click="vm.cargaPublicaciones()" aria-label="Favorite">
+                  <md-icon>favorite</md-icon>
+                </md-button>
+              </div>
+            </md-toolbar>
+            <ui-view flex></ui-view>
+      </md-content>
+    </div>
+
+    
+
+    <script data-main="require.config" src="bower_components/requirejs/require.js"></script>
+
+
+  </body>
+</html>
