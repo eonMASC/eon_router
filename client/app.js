@@ -32,56 +32,17 @@ function (angularAMD) {
         url: "/",
         templateUrl: "views/home/home.html"
       })
+      .state('otra', {
+        url: "/todo/lo/demas",
+        templateUrl: "views/home/home.html"
+      })
       .state('notfound',{
         url: "/404",
         template: "<h1>Error 404</h1>"
       });
-
-    /*
-    $urlRouterProvider.rule(function ($injector, $location) {
-      console.log('Regla!!');
-
-       //what this function returns will be set as the $location.url
-        var path = $location.path(), normalized = path.toLowerCase();
-        if (path != normalized) {
-            //instead of returning a new url string, I'll just change the $location.path directly so I don't have to worry about constructing a new url string and so a new state change is not triggered
-            $location.replace().path(normalized);
-        }
-        // because we've returned nothing, no state change occurs
-    });
-  */
-
     
-    $urlRouterProvider.otherwise(function($injector, $location){
-      var $http = $injector.get('$http');
-      var $ocLazyLoad = $injector.get('$ocLazyLoad');
-      var $state = $injector.get('$state');
-      var $rootScope = $injector.get('$rootScope');
-
-      var sState = $location.url();
-
-          console.log('Si si');
-
-        $http.post('/mapper/url',{url: $location.url()}).
-          then(function success(respuesta){
-            console.log('Respuesta: ',respuesta.data);
-            if(respuesta.data.success){
-              $ocLazyLoad.load(respuesta.data.map.componenteURL).then(function(){
-                //alert('Windows');
-                console.log('Estado actual: ', respuesta.data.map.stateTo);
-                //$location.url('/publicaciones');
-                $state.go(respuesta.data.map.stateTo, {}, {reload: true});
-                //$state.reload();
-
-              });
-            } else {
-              //$state.go('404', {}, {reload: true});
-              $location.url('/404');
-            }
-              //$futureStateProvider.futureState(respuesta.data.map);
-          });
-              
-    });
+    
+    $urlRouterProvider.otherwise(callBackOtherwise);
 
     $locationProvider.html5Mode(true);
 
@@ -123,6 +84,37 @@ function (angularAMD) {
     vm.titulo = "durango.gob.mx";
 
   });
+
+  function callBackOtherwise($injector, $location){
+    var $http = $injector.get('$http');
+    var $ocLazyLoad = $injector.get('$ocLazyLoad');
+    var $state = $injector.get('$state');
+    var $rootScope = $injector.get('$rootScope');
+
+    var sState = $location.url();
+
+        console.log('Si si');
+
+      $http.post('/mapper/url',{url: $location.url()}).
+        then(function success(respuesta){
+          console.log('Respuesta: ',respuesta.data);
+          if(respuesta.data.success){
+            $ocLazyLoad.load(respuesta.data.map.componenteURL).then(function(){
+              //alert('Windows');
+              console.log('Estado actual: ', respuesta.data.map.stateTo);
+              //$location.url('/publicaciones');
+              $state.go(respuesta.data.map.stateTo, {}, {reload: true});
+              //$state.reload();
+
+            });
+          } else {
+            //$state.go('404', {}, {reload: true});
+            $location.url('/404');
+          }
+            //$futureStateProvider.futureState(respuesta.data.map);
+        });
+            
+  }
 
   return angularAMD.bootstrap(App);
 });

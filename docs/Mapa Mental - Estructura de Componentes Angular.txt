@@ -1,0 +1,25 @@
+Mapa Mental - Estructura de Componentes Angular
+
+publicaciones/
+	publicaciones.module.js
+
+	/services
+		publicacion.service.js
+			angular("PublicacionModule")
+
+	/directives
+		sidebar.directive.js
+		sidebar.directive.html
+
+	/lista
+		lista.controller.js
+			angular("ListaController")
+		lista.html
+		lista-footer.html
+		lista.scss
+		lista.service.js
+
+	/ficha
+		ficha.controller.js
+		ficha.html
+		ficha.scss
