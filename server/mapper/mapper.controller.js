@@ -7,25 +7,40 @@ exports.index = function (req, res) {
 		success = true,
 		componenteName = req.body.url.split('/')[1];
 
+	var arrPaginas = [
+		'primera_pagina',
+		'segunda_pagina',
+		'ultima_pagina'
+	]
+
 	switch(componenteName){
 		case 'home':
 			myJson = {
-				//stateTo: "home",
+				tipo: 'componente',
 				componenteURL: "home",
 			}
 			break;		
 		case 'publicaciones':
 
 			myJson = {
-				//stateTo: "publicaciones",
-				componenteURL: "./eon_componentes/publicaciones/publicaciones.module.js"
+				tipo: 'componente',
+				componenteURL: "eon_componentes/publicaciones/publicaciones.module.js"
 			}
 			break;
 		default:
-			myJson = {
-				name: componenteName
-			};
-			success = false;
+			var pagina = req.body.url.replace('/','');
+
+			if((arrPaginas.indexOf(pagina) > -1)){
+				myJson = {
+					tipo: 'pagina',
+					nombre: pagina,
+					url: "paginas/" + pagina + ".html"
+				};
+			} else {
+				myJson = {};
+				success = false;
+			}			
+			
 	}
 
 	res.json({
