@@ -17,6 +17,8 @@
     <link rel="stylesheet" href="bower_components/angular-material/angular-material.css">
     <!-- endinject -->
 
+    <link rel="stylesheet" href="eon_directives/sidenav/angular-material-sidenav.css" />
+
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
     
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -25,61 +27,38 @@
 
     <!-- endbuild -->
 
+    <style type="text/css">
+      body,
+      body > div {
+          max-width: 100%;
+          max-height: 100%;
+          overflow: hidden;
+      }
+
+      body > div {
+          height: 100%;
+      }
+
+      .nav-header {
+          flex-shrink: 0;
+          z-index: 2;
+      }
+
+      .nav-header h1,
+      .nav-header h4 {
+          color: white;
+          text-align: center;
+      }
+
+      .nav-header a.logo {
+          text-decoration: none;
+      }
+    </style>
+
   </head>
   <body>
 
-    <div ng-controller="AppCtrl as vm" ng-cloak flex layout="row">
-        <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="menu_principal">
-          <md-toolbar>
-            <h1 class="md-toolbar-tools">Menu Principal</h1>
-          </md-toolbar>
-          <md-content layout="column">
-                <md-button href="/">
-                  Incio
-                </md-button>
-                 <md-button href="/publicaciones">
-                  Publicaciones
-                </md-button>
-                <md-button href="/publicaciones/martin">
-                  Publicacion de Martin
-                </md-button>
-                <md-button href="/primera_pagina">
-                  Primera Pagina
-                </md-button>
-                <md-button href="/segunda_pagina">
-                  Segunda Pagina
-                </md-button>
-                <md-button href="/ultima_pagina">
-                  Ultima Pagina
-                </md-button>
-                <md-button href="/otro/error">
-                  Error
-                </md-button>
-          </md-content>
-        </md-sidenav>
-        <md-content layout="column" flex>
-            <md-toolbar>
-              <div class="md-toolbar-tools">
-                <md-button ng-click="vm.toggleMenu()" aria-label="Atras">
-                  Menu
-                </md-button>
-                <h2>
-                  <span>{{ vm.titulo }}</span>
-                </h2>
-                <span flex></span>
-                <md-button class="md-raised" ng-click="vm.viewState($event)" aria-label="Learn More">
-                  Uno
-                </md-button>
-                <md-button class="md-fab md-mini" ng-click="vm.cargaPublicaciones()" aria-label="Favorite">
-                  <md-icon>favorite</md-icon>
-                </md-button>
-              </div>
-            </md-toolbar>
-            <ui-view flex></ui-view>
-      </md-content>
-    </div>
-
-    
+    <div layout="row" flex ui-view></div>    
 
     <script data-main="require.config" src="bower_components/requirejs/require.js"></script>
 

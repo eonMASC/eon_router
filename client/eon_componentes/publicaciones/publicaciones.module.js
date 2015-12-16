@@ -28,7 +28,7 @@ function (angularAMD, ListadoCtrl, FichaCtrl) {
       // Now set up the states
 
       $stateProvider
-        .state('publicaciones', 
+        .state('eonSite.publicaciones', 
           angularAMD.route({
               url: '/publicaciones',
               templateUrl: 'eon_componentes/publicaciones/listado/listado.html',
@@ -37,7 +37,7 @@ function (angularAMD, ListadoCtrl, FichaCtrl) {
           })
         );
         
-      $stateProvider.state('publicacionesficha', 
+      $stateProvider.state('eonSite.publicacionesficha', 
           angularAMD.route({
               url: '/publicaciones/:id',
               templateUrl: 'eon_componentes/publicaciones/ficha/ficha.html',

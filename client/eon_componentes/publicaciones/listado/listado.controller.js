@@ -1,6 +1,6 @@
 define(['eon_componentes/publicaciones/publicaciones.module'], function (componente) {
 
-   componente.controller('ListadoCtrl', function () {
+   componente.controller('ListadoCtrl', function ($scope) {
       var vm = this;
 
       console.log('dentro');
@@ -15,6 +15,8 @@ define(['eon_componentes/publicaciones/publicaciones.module'], function (compone
           descripcion: 'je je'
         }
       ]
+
+      $scope.$parent.eonSite.titulo = 'Listado de Noticias';
 
       vm.titulo = "Listado de Noticias";
     });
