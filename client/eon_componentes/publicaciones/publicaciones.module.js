@@ -23,7 +23,9 @@ function (angularAMD) {
   ]);
 
   componente.config(
-    function ($stateProvider) {
+    function ($stateProvider, registerRoutesProvider) {
+
+      registerRoutesProvider.register([{name:"Robert"}]);
 
       console.log('Modulo configurado');
 
