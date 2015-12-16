@@ -1,9 +1,10 @@
 define([
-  'app.includes'
+  'app.includes',
+    'eon_servicios/serviciosEON'
 ], 
 
 
-function (angularAMD, ListadoCtrl, FichaCtrl) {
+function (angularAMD) {
 
   'use strict';
 
@@ -17,7 +18,8 @@ function (angularAMD, ListadoCtrl, FichaCtrl) {
     'ngAnimate',
     'ngMaterial',
     'ngMessages',
-    'ngAria'
+    'ngAria',
+      'serviciosEON'
   ]);
 
   componente.config(

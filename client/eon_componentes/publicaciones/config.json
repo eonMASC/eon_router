@@ -1,0 +1,6 @@
+{
+    "modos_visuales":[
+       {"name":"listado","controller":"listado.controller.js", "params":{}},
+       {"name":"ficha", "controller":"ficha.controller.js", "params":{}}
+   ] 
+}

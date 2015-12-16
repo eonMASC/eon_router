@@ -13,7 +13,7 @@ require.config({
     'angular-resource': 'bower_components/angular-resource/angular-resource.min',
     'angular-aria': 'bower_components/angular-aria/angular-aria.min',
     'angular-messages': 'bower_components/angular-messages/angular-messages.min',
-    'angular-sanitize': 'bower_components/angular-sanitize/angular-sanitize.min'
+    'angular-sanitize': 'bower_components/angular-sanitize/angular-sanitize.min'    
   },
 
   // Add angular modules that does not support AMD out of the box, put it in a shim
@@ -28,7 +28,8 @@ require.config({
     'angular-sanitize': [ 'angular' ],
     'angular-aria': [ 'angular' ],
     'angular-messages': [ 'angular' ],
-    'angular-ui-router': [ 'angular' ]
+    'angular-ui-router': [ 'angular' ],
+    'readerJSON':['angular']
   },
 
   // kick start application
