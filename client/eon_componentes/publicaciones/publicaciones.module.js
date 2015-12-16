@@ -1,9 +1,10 @@
 define([
-  'app.includes'
+  'app.includes',
+    'eon_servicios/serviciosEON'
 ], 
 
 
-function (angularAMD, ListadoCtrl, FichaCtrl) {
+function (angularAMD) {
 
   'use strict';
 
@@ -17,11 +18,14 @@ function (angularAMD, ListadoCtrl, FichaCtrl) {
     'ngAnimate',
     'ngMaterial',
     'ngMessages',
-    'ngAria'
+    'ngAria',
+      'serviciosEON'
   ]);
 
   componente.config(
-    function ($stateProvider) {
+    function ($stateProvider, registerRoutesProvider) {
+
+      registerRoutesProvider.register([{name:"Robert"}]);
 
       console.log('Modulo configurado');
 

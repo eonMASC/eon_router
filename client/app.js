@@ -18,7 +18,8 @@ function (angularAMD) {
     'ngMaterial',
     'ngMessages',
     'ngAria',
-    'oc.lazyLoad'
+    'oc.lazyLoad',
+    /*'readJSON'*/
   ]);
 
   App.config(function ($stateProvider, $urlRouterProvider, $locationProvider, $mdThemingProvider) {
