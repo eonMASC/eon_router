@@ -1,13 +1,11 @@
-define([], function () {
+define(['eon_componentes/publicaciones/publicaciones.module'], function (componente) {
 
-   return function ($stateParams) {
+   componente.controller('FichaCtrl', function ($stateParams) {
       var vm = this;
-
-      console.log('ficha controller ', $stateParams);
 
       vm.noticia_nombre = $stateParams.id;
 
       vm.titulo = "Listado de Noticias";
-    }
+    });
     
 }); 
