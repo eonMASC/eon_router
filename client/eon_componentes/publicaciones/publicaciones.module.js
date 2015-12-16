@@ -1,7 +1,5 @@
 define([
-  'app.includes',
-  './listado/listado.controller',
-  './ficha/ficha.controller'
+  'app.includes'
 ], 
 
 
@@ -23,7 +21,7 @@ function (angularAMD, ListadoCtrl, FichaCtrl) {
   ]);
 
   componente.config(
-    function ($stateProvider, $urlRouterProvider, $locationProvider) {
+    function ($stateProvider) {
 
       console.log('Modulo configurado');
 
@@ -31,33 +29,24 @@ function (angularAMD, ListadoCtrl, FichaCtrl) {
 
       $stateProvider
         .state('publicaciones', 
-
           angularAMD.route({
               url: '/publicaciones',
               templateUrl: 'eon_componentes/publicaciones/listado/listado.html',
-              controller: 'ListadoCtrl',
-              controllerUrl: 'eon_componentes/publicaciones/listado/listado.controller',
-              controllerAs: 'vm'
+              controller: 'ListadoCtrl as vm',
+              controllerUrl: 'eon_componentes/publicaciones/listado/listado.controller'
           })
         );
         
       $stateProvider.state('publicacionesficha', 
-
           angularAMD.route({
               url: '/publicaciones/:id',
               templateUrl: 'eon_componentes/publicaciones/ficha/ficha.html',
-              controller: 'FichaCtrl',
-              controllerUrl: 'eon_componentes/publicaciones/ficha/ficha.controller',
-              controllerAs: 'vm'
+              controller: 'FichaCtrl as vm',
+              controllerUrl: 'eon_componentes/publicaciones/ficha/ficha.controller'
           })
         );
 
-      //$locationProvider.html5Mode(true);
-
   });
-
-  componente.controller('ListadoCtrl', ListadoCtrl);
-  componente.controller('FichaCtrl', FichaCtrl);
 
   return componente;
 
