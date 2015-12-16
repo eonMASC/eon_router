@@ -1,7 +1,5 @@
 define([
-  'app.includes',
-  //'eon_componentes/publicaciones/listado/listado.controller'
-  //'eon_componentes/publicaciones/publicaciones.module'
+  'app.includes'
 ], 
 
 
@@ -21,7 +19,6 @@ function (angularAMD) {
     'ngMessages',
     'ngAria',
     'oc.lazyLoad'
-    //'publicacionesComponente'
   ]);
 
   App.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
@@ -39,8 +36,7 @@ function (angularAMD) {
       .state('notfound',{
         url: "/404",
         template: "<h1>Error 404</h1>"
-      });
-    
+      });    
     
     $urlRouterProvider.otherwise(callBackOtherwise);
 
@@ -74,11 +70,6 @@ function (angularAMD) {
 
     vm.cargaPublicaciones = function(){
       $ocLazyLoad.load('./eon_componentes/publicaciones/publicaciones.module.js')
-
-      /*require(['./eon_componentes/publicaciones/publicaciones.module'], function(module){
-        console.log('Modulo: ', module);
-        App.$inject(module);
-      });*/
     }
 
     vm.titulo = "durango.gob.mx";
@@ -88,31 +79,22 @@ function (angularAMD) {
   function callBackOtherwise($injector, $location){
     var $http = $injector.get('$http');
     var $ocLazyLoad = $injector.get('$ocLazyLoad');
-    var $state = $injector.get('$state');
+    var $urlRouter = $injector.get('$urlRouter');
     var $rootScope = $injector.get('$rootScope');
 
-    var sState = $location.url();
+    var sState = $location.url();       
 
-        console.log('Si si');
-
-      $http.post('/mapper/url',{url: $location.url()}).
-        then(function success(respuesta){
-          console.log('Respuesta: ',respuesta.data);
-          if(respuesta.data.success){
-            $ocLazyLoad.load(respuesta.data.map.componenteURL).then(function(){
-              //alert('Windows');
-              console.log('Estado actual: ', respuesta.data.map.stateTo);
-              //$location.url('/publicaciones');
-              $state.go(respuesta.data.map.stateTo, {}, {reload: true});
-              //$state.reload();
-
-            });
-          } else {
-            //$state.go('404', {}, {reload: true});
-            $location.url('/404');
-          }
-            //$futureStateProvider.futureState(respuesta.data.map);
-        });
+    $http.post('/mapper/url',{url: $location.url()}).
+      then(function success(respuesta){
+        console.log('Respuesta: ',respuesta.data);
+        if(respuesta.data.success){
+          $ocLazyLoad.load(respuesta.data.map.componenteURL).then(function(){
+            $urlRouter.sync();
+          });
+        } else {            
+          $location.url('/404');
+        }            
+      });
             
   }
 

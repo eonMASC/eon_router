@@ -10,14 +10,14 @@ exports.index = function (req, res) {
 	switch(componenteName){
 		case 'home':
 			myJson = {
-				stateTo: "home",
+				//stateTo: "home",
 				componenteURL: "home",
 			}
 			break;		
 		case 'publicaciones':
 
 			myJson = {
-				stateTo: "publicaciones",
+				//stateTo: "publicaciones",
 				componenteURL: "./eon_componentes/publicaciones/publicaciones.module.js"
 			}
 			break;
