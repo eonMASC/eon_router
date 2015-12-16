@@ -29,9 +29,9 @@ function (angularAMD) {
         url: "/",
         templateUrl: "views/home/home.html"
       })
-      .state('otra', {
-        url: "/todo/lo/demas",
-        templateUrl: "views/home/home.html"
+      .state('pagina',{
+        abstract: true,
+        template: "<div id='page_container' ng-view='pagina_viewer'></div>"
       })
       .state('notfound',{
         url: "/404",
@@ -41,6 +41,42 @@ function (angularAMD) {
     $urlRouterProvider.otherwise(callBackOtherwise);
 
     $locationProvider.html5Mode(true);
+
+  });
+
+  App.provider('$newState', function($stateProvider){
+        this.$get = function($state){
+            return {
+                /**
+                 * @function app.dashboard.dashboardStateProvider.addState
+                 * @memberof app.dashboard
+                 * @param {string} title - the title used to build state, url & find template
+                 * @param {string} controllerAs - the controller to be used, if false, we don't add a controller (ie. 'UserController as user')
+                 * @param {string} templatePrefix - either 'content', 'presentation' or null
+                 * @author Alex Boisselle
+                 * @description adds states to the dashboards state provider dynamically
+                 * @returns {object} user - token and id of user
+                 */
+                addPageState: function(nombre, url) {
+                    $stateProvider.state(nombre, {
+                          url: '/' + nombre,
+                          //views: {
+                          //  "@pagina_viewer": {
+                              templateUrl: url,
+                              controller: 'PageViewerCtrl as vm'
+                          //  }
+                          //}
+                          
+                    });
+                }
+            }
+        }
+    });
+
+
+  App.controller('PageViewerCtrl', function(){
+    var vm = this;
+
 
   });
 
@@ -80,7 +116,8 @@ function (angularAMD) {
     var $http = $injector.get('$http');
     var $ocLazyLoad = $injector.get('$ocLazyLoad');
     var $urlRouter = $injector.get('$urlRouter');
-    var $rootScope = $injector.get('$rootScope');
+    //var $rootScope = $injector.get('$rootScope');
+    var $newState = $injector.get('$newState');
 
     var sState = $location.url();       
 
@@ -88,9 +125,14 @@ function (angularAMD) {
       then(function success(respuesta){
         console.log('Respuesta: ',respuesta.data);
         if(respuesta.data.success){
-          $ocLazyLoad.load(respuesta.data.map.componenteURL).then(function(){
+          if(respuesta.data.map.tipo == 'componente'){
+            $ocLazyLoad.load(respuesta.data.map.componenteURL).then(function(){
+              $urlRouter.sync();
+            });
+          } else if(respuesta.data.map.tipo == 'pagina'){
+            $newState.addPageState(respuesta.data.map.nombre, respuesta.data.map.url);
             $urlRouter.sync();
-          });
+          }          
         } else {            
           $location.url('/404');
         }            
