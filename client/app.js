@@ -92,7 +92,7 @@ function (angularAMD) {
   });
 */
 
-  App.controller('PageViewerCtrl', function($scope, $state){
+  App.controller('PageViewerCtrl', function($scope, $state, $ocLazyLoad){
     var vm = this;
 
     $scope.$parent.eonSite.titulo = $state.current.data.titulo;

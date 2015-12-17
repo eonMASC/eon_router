@@ -6,7 +6,7 @@ require.config({
     'angular-ui-router': 'bower_components/angular-ui-router/release/angular-ui-router.min',
     'angularAMD': 'bower_components/angularAMD/angularAMD.min',
     'ngload': 'bower_components/angularAMD/ngload',
-    'oclazyload': 'bower_components/oclazyload/dist/ocLazyLoad.require.min',
+    'oclazyload': 'bower_components/oclazyload/dist/ocLazyLoad.require',
     'angular-animate': 'bower_components/angular-animate/angular-animate.min',
     'angular-cookies': 'bower_components/angular-cookies/angular-cookies.min',
     'angular-material': 'bower_components/angular-material/angular-material.min',
