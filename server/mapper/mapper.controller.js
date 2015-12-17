@@ -34,6 +34,7 @@ exports.index = function (req, res) {
 				myJson = {
 					tipo: 'pagina',
 					nombre: pagina,
+					paginaTitulo: 'Titulo de ' + pagina.toUpperCase(),
 					url: "paginas/" + pagina + ".html"
 				};
 			} else {

@@ -22,26 +22,37 @@ function (angularAMD) {
     /*'readJSON'*/
   ]);
 
-  App.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
-
-    // Now set up the states
-    $stateProvider
-      .state('inicio', {
-        url: "/",
-        templateUrl: "views/home/home.html"
-      })
-      .state('pagina',{
-        abstract: true,
-        template: "<div id='page_container' ng-view='pagina_viewer'></div>"
-      })
-      .state('notfound',{
-        url: "/404",
-        template: "<h1>Error 404</h1>"
-      });    
-    
-    $urlRouterProvider.otherwise(callBackOtherwise);
+  App.config(function ($stateProvider, $urlRouterProvider, $locationProvider, $mdThemingProvider) {
 
     $locationProvider.html5Mode(true);
+    $urlRouterProvider.otherwise(callBackOtherwise);
+
+    $mdThemingProvider.theme('default')
+      .primaryPalette('blue')
+      .accentPalette('indigo')
+      .warnPalette('red');
+
+
+    $stateProvider.state({
+        name: 'eonSite',
+        abstract: true,
+        templateUrl: 'views/eon/cascaron.html',
+        controller: 'EonSiteCtrl as eonSite'
+    });
+
+    $stateProvider.state({
+        name: 'eonSite.inicio',
+        url: '/',
+        templateUrl: 'views/home/home.html',
+        controller: 'HomeCtrl'
+    });
+
+    $stateProvider.state({
+        name: 'eonSite.notfound',
+        url: '/404',
+        templateUrl: 'views/404/404.html',
+        //controller: 'HomeCtrl'
+    });  
 
   });
 
@@ -58,15 +69,12 @@ function (angularAMD) {
                  * @description adds states to the dashboards state provider dynamically
                  * @returns {object} user - token and id of user
                  */
-                addPageState: function(nombre, url) {
-                    $stateProvider.state(nombre, {
-                          url: '/' + nombre,
-                          //views: {
-                          //  "@pagina_viewer": {
-                              templateUrl: url,
-                              controller: 'PageViewerCtrl as vm'
-                          //  }
-                          //}
+                addPageState: function(nombre, url, data) {
+                    $stateProvider.state('eonSite.' + nombre, {
+                          url: '/' + nombre,                          
+                          templateUrl: url,
+                          controller: 'PageViewerCtrl as vm',
+                          data: data                        
                           
                     });
                 }
@@ -75,20 +83,25 @@ function (angularAMD) {
     });
 
 
-  App.controller('PageViewerCtrl', function(){
+  App.controller('HomeCtrl', function($scope){
     var vm = this;
 
+    $scope.$parent.eonSite.titulo = 'Inicio';
 
   });
 
-  App.controller('AppCtrl', function($mdSidenav, $state, $mdDialog, $ocLazyLoad){
+  App.controller('PageViewerCtrl', function($scope, $state){
     var vm = this;
 
-    var $stateProvider = proveedorEstados;
+    $scope.$parent.eonSite.titulo = $state.current.data.titulo;
 
-    vm.toggleMenu = function () {
-      $mdSidenav('menu_principal').toggle();
-        
+  });
+
+  App.controller('EonSiteCtrl', function($mdSidenav, $state, $mdDialog){
+    var vm = this;           
+
+    vm.onClickMenu = function () {
+        $mdSidenav('left').toggle();
     };
 
     vm.viewState = function (ev){
@@ -103,10 +116,6 @@ function (angularAMD) {
           .ok('Got it!')
           .targetEvent(ev)
       );
-    }
-
-    vm.cargaPublicaciones = function(){
-      $ocLazyLoad.load('./eon_componentes/publicaciones/publicaciones.module.js')
     }
 
     vm.titulo = "durango.gob.mx";
@@ -131,7 +140,7 @@ function (angularAMD) {
               $urlRouter.sync();
             });
           } else if(respuesta.data.map.tipo == 'pagina'){
-            $newState.addPageState(respuesta.data.map.nombre, respuesta.data.map.url);
+            $newState.addPageState(respuesta.data.map.nombre, respuesta.data.map.url, {titulo: respuesta.data.map.paginaTitulo});
             $urlRouter.sync();
           }          
         } else {            

@@ -1,0 +1,55 @@
+<md-sidenav class="md-sidenav-left md-whiteframe-z2"
+    md-component-id="left"
+    md-is-locked-open="$mdMedia('gt-md')"
+    style="background-color:rgb(33,150,243)">
+
+    <header class="nav-header">
+        <a ng-href="/" class="logo">
+            <h1 class="md-heading">durango.gob.mx</h1>
+        </a>
+    </header>
+
+    <md-content flex role="navigation" layout="column" style="background-color:rgb(33,150,243)">
+        <md-button href="/">
+                  Incio
+                </md-button>
+                 <md-button href="/publicaciones">
+                  Publicaciones
+                </md-button>
+                <md-button href="/publicaciones/martin">
+                  Publicacion de Martin
+                </md-button>
+                <md-button href="/primera_pagina">
+                  Primera Pagina
+                </md-button>
+                <md-button href="/segunda_pagina">
+                  Segunda Pagina
+                </md-button>
+                <md-button href="/ultima_pagina">
+                  Ultima Pagina
+                </md-button>
+                <md-button href="/otro/error">
+                  Error
+                </md-button>
+
+    </md-content>
+</md-sidenav>
+
+<div layout="column" flex role="main">
+	<md-toolbar>
+	    <div class="md-toolbar-tools">
+	        <md-button class="md-icon-button"
+	            aria-label="Menu Button"
+	            hide-gt-md
+	            ng-click="eonSite.onClickMenu();">
+	            <md-icon aria-label="Menu Icon">menu</md-icon>
+	        </md-button>
+
+	        <h2>{{ eonSite.titulo }}</h2>
+
+	        <span flex></span>
+	    </div>
+	</md-toolbar>
+
+    <div ui-view layout="column" layout-padding></div>
+</div>
