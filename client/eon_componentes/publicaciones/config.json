@@ -1,7 +1,19 @@
 {
     "modos_visuales":[
-       {"name":"publicaciones","vista": "listado","controller":"ListadoCtrl", "url":"/publicaciones","params":""},
-       {"name":"publicacionesficha","vista":"ficha", "controller":"FichaCtrl", "url":"/publicaciones","params":":id"}
+       {
+			"name":"publicaciones",
+			"vista": "listado",
+			"controller":"ListadoCtrl", 
+			"url":"/publicaciones",
+			"params":""
+       },
+       {
+			"name":"publicacionesficha",
+			"vista":"ficha", 
+			"controller":"FichaCtrl", 
+			"url":"/publicaciones",
+			"params":":id"
+		}
    	],
 
    	"directives":[

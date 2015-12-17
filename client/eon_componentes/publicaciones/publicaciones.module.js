@@ -26,7 +26,7 @@ function (angularAMD){//,slidePublicaciones) {
     function ($stateProvider, $provide) {
 
       //registerRoutesProvider.register([{name:"Robert"}]);
-      $provide.provider("registerX", function($stateProvider){
+      /*$provide.provider("registerX", function($stateProvider){
         var data;
         return {                  
           $get: function($http, readerJSON, $state){
@@ -50,10 +50,7 @@ function (angularAMD){//,slidePublicaciones) {
                         templateUrl: tplUrl,
                         controller: controller,
                         controllerUrl: controllerUrl
-                    };
-                    /*console.log(tplUrl);
-                    console.log(controller);
-                    console.log(controllerUrl);*/
+                    };                  
                     console.log(name);
                     console.log(configState);
                     $stateProvider.state('eonSite.' + name, 
@@ -68,7 +65,7 @@ function (angularAMD){//,slidePublicaciones) {
             }
           }    
         }
-      });      
+      }); */     
 
       // Now set up the states
      /* $stateProvider
@@ -92,10 +89,11 @@ function (angularAMD){//,slidePublicaciones) {
 
   });
 
-  componente.run(function(directiveLoader,readerJSON, registerX){
+  componente.run(function(directiveLoader,readerJSON, registerStates){
     console.log("Modulo corriendo");
 
-    registerX('eon_componentes/publicaciones/','config.json');
+    // registro de estados de modos visuales del componente
+    registerStates('eon_componentes/publicaciones/','config.json');
 
     var $confg = readerJSON.getData("/eon_componentes/publicaciones/config.json").then(function(response){
       
