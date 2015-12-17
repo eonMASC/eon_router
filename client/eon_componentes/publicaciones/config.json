@@ -1,7 +1,7 @@
 {
     "modos_visuales":[
-       {"name":"listado","controller":"listado.controller.js", "params":{}},
-       {"name":"ficha", "controller":"ficha.controller.js", "params":{}}
+       {"name":"publicaciones","vista": "listado","controller":"ListadoCtrl", "url":"/publicaciones","params":""},
+       {"name":"publicacionesficha","vista":"ficha", "controller":"FichaCtrl", "url":"/publicaciones","params":":id"}
    	],
 
    	"directives":[
