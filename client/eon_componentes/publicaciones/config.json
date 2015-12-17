@@ -1,16 +1,18 @@
 {
     "modos_visuales":[
        {
-			"name":"publicaciones",
+			"nameUrl":"publicaciones",
 			"vista": "listado",
 			"controller":"ListadoCtrl", 
+			"controllerAs":"vm",
 			"url":"/publicaciones",
 			"params":""
        },
        {
-			"name":"publicacionesficha",
+			"nameUrl":"ficha",
 			"vista":"ficha", 
 			"controller":"FichaCtrl", 
+			"controllerAs":"",
 			"url":"/publicaciones",
 			"params":":id"
 		}

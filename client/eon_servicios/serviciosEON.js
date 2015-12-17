@@ -22,33 +22,31 @@ function (angularAMD) {
         var data;
         return {                  
           $get: function($http, readerJSON, $state){
-            return function(path, fileName){
+            return function(path, fileName){              
               readerJSON.getData(path + fileName).then(function(response){
                 if(response.data.modos_visuales){
                   //console.log(response.data.modos_visuales);
                   var states = response.data.modos_visuales;
                   angular.forEach(states, function(state, key){
                     //console.log(state);
-                    var name = state.name;
+                    var name = state.nameUrl;
                     var vista = state.vista;
-                    var controllerName = state.controller;
+                    var controller = state.controller;                    
                     var tplUrl = path + vista + '/' + vista +'.html';
-                    var controller = controllerName + " as vm";
-                    var asNameController = controllerName + " as vm";
+                    var as = (state.controllerAs && state.controllerAs != "")? " as " + state.controllerAs : " as vm";
                     var controllerUrl = path + vista + '/' + vista + '.controller';
                     var params = state.params != ""? "/" + state.params : "";
                     var url = state.url;
+
                     var configState = {
                         url: url + params,
                         templateUrl: tplUrl,
-                        controller: controller,
+                        controller: controller + as,
                         controllerUrl: controllerUrl
-                    };
+                    }
                     /*console.log(tplUrl);
                     console.log(controller);
-                    console.log(controllerUrl);*/
-                    console.log(name);
-                    console.log(configState);
+                    console.log(controllerUrl);*/                    
                     $stateProvider.state('eonSite.' + name, 
                       angularAMD.route(configState)
                     );                    
