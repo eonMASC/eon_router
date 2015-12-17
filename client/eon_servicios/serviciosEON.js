@@ -49,7 +49,8 @@ function (angularAMD) {
                     console.log(controllerUrl);*/                    
                     $stateProvider.state('eonSite.' + name, 
                       angularAMD.route(configState)
-                    );                    
+                    );  
+                    console.log("Estado y modos visual " + name + " registrado!");                  
                   });
 
                 } else {
