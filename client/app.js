@@ -40,12 +40,14 @@ function (angularAMD) {
         controller: 'EonSiteCtrl as eonSite'
     });
 
+    /*
     $stateProvider.state({
         name: 'eonSite.inicio',
         url: '/',
         templateUrl: 'views/home/home.html',
         controller: 'HomeCtrl'
     });
+    */
 
     $stateProvider.state({
         name: 'eonSite.notfound',
@@ -71,24 +73,24 @@ function (angularAMD) {
                  */
                 addPageState: function(nombre, url, data) {
                     $stateProvider.state('eonSite.' + nombre, {
-                          url: '/' + nombre,                          
+                          url: '/' + (nombre == 'pagina_inicio' ? '' : nombre) ,                          
                           templateUrl: url,
                           controller: 'PageViewerCtrl as vm',
-                          data: data                        
-                          
+                          data: data   
                     });
                 }
             }
         }
     });
 
-
+  /*
   App.controller('HomeCtrl', function($scope){
     var vm = this;
 
     $scope.$parent.eonSite.titulo = 'Inicio';
 
   });
+*/
 
   App.controller('PageViewerCtrl', function($scope, $state){
     var vm = this;
@@ -105,8 +107,6 @@ function (angularAMD) {
     };
 
     vm.viewState = function (ev){
-      console.log($state);
-
       $mdDialog.show(
         $mdDialog.alert()
           .clickOutsideToClose(true)
@@ -133,7 +133,9 @@ function (angularAMD) {
 
     $http.post('/mapper/url',{url: $location.url()}).
       then(function success(respuesta){
-        console.log('Respuesta: ',respuesta.data);
+        
+        //console.log('Respuesta: ',respuesta.data);
+        
         if(respuesta.data.success){
           if(respuesta.data.map.tipo == 'componente'){
             $ocLazyLoad.load(respuesta.data.map.componenteURL).then(function(){

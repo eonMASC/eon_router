@@ -7,8 +7,6 @@ define(['eon_componentes/publicaciones/publicaciones.module'], function (compone
        var $confg = readerJSON.getData("/eon_componentes/publicaciones/config.json").then(function(response){
            console.log(response.data);
        });       
-
-      console.log('dentro');
        
        $scope.handle = function(){
            mensaje("hola es un mensaje de prueba")

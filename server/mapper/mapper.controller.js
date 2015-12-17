@@ -30,7 +30,14 @@ exports.index = function (req, res) {
 		default:
 			var pagina = req.body.url.replace('/','');
 
-			if((arrPaginas.indexOf(pagina) > -1)){
+			if(pagina == ''){
+				myJson = {
+					tipo: 'pagina',
+					nombre: 'pagina_inicio',
+					paginaTitulo: 'Pagina de Inicio',
+					url: "views/home/home.html"
+				};
+			} else if((arrPaginas.indexOf(pagina) > -1)){
 				myJson = {
 					tipo: 'pagina',
 					nombre: pagina,

@@ -10,8 +10,6 @@ function (angularAMD){//,slidePublicaciones) {
 
   'use strict';
 
-  console.log('Modulo cargado');
-
   var componente = angular.module('publicacionesComponente', [
     'ui.router',
     'ngCookies',
@@ -28,8 +26,6 @@ function (angularAMD){//,slidePublicaciones) {
     function ($stateProvider, registerRoutesProvider) {
 
       registerRoutesProvider.register([{name:"Robert"}]);
-
-      console.log('Modulo configurado');
 
       // Now set up the states
 
