@@ -33,6 +33,34 @@ function (angularAMD) {
       }
       return objFn;
     });
+
+    modulo.service('directiveLoader',["$ocLazyLoad",function($ocLazyLoad){
+
+        var obj={
+
+          objDirectives:{},
+          
+          load: function(objPaths){
+
+            this.objDirectives=objPaths;
+
+            angular.forEach(this.objDirectives, function(directive, key) {
+              
+              console.log("a cargar", directive.name);
+              
+              $ocLazyLoad.load(directive.directiveUrl).then(function(){
+                console.log("se cargo con exito", directive.directiveUrl);
+              })
+            })
+
+
+          }
+        };
+
+        return obj;
+    }]);
+
+
     
   return modulo;
 

@@ -1,10 +1,12 @@
 define([
   'app.includes',
-    'eon_servicios/serviciosEON'
+ // 'eon_componentes/publicaciones/directives/slidePublicaciones',
+  'eon_servicios/serviciosEON'
 ], 
 
 
-function (angularAMD) {
+function (angularAMD){//,slidePublicaciones) {
+
 
   'use strict';
 
@@ -19,7 +21,7 @@ function (angularAMD) {
     'ngMaterial',
     'ngMessages',
     'ngAria',
-      'serviciosEON'
+    'serviciosEON'
   ]);
 
   componente.config(
@@ -49,6 +51,16 @@ function (angularAMD) {
               controllerUrl: 'eon_componentes/publicaciones/ficha/ficha.controller'
           })
         );
+
+  });
+
+  componente.run(function(directiveLoader,readerJSON){
+    console.log("Modulo corriendo");
+
+    var $confg = readerJSON.getData("/eon_componentes/publicaciones/config.json").then(function(response){
+      
+      directiveLoader.load(response.data.directives);
+    }); 
 
   });
 

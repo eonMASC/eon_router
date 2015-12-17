@@ -2,5 +2,10 @@
     "modos_visuales":[
        {"name":"listado","controller":"listado.controller.js", "params":{}},
        {"name":"ficha", "controller":"ficha.controller.js", "params":{}}
-   ] 
+   	],
+
+   	"directives":[
+   		{"name":"slidePublicaciones","directiveUrl":"eon_componentes/publicaciones/directives/slidePublicaciones.js"}
+   	]
+
 }
