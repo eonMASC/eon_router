@@ -3,9 +3,11 @@ define(['eon_componentes/publicaciones/publicaciones.module'], function (compone
    componente.controller('ListadoCtrl', function ($scope, $ocLazyLoad) {
       var vm = this;       
       $ocLazyLoad.load(['./eon_dependencias/royal_slider/royal_slider.js']);      
-      
 
-      console.log('dentro');
+       //LEER JSON CONFIG PARA OBTENER LOS MODOS VISUALES
+      /* var $confg = readerJSON.getData("/eon_componentes/publicaciones/config.json").then(function(response){
+           console.log(response.data);
+       });    */   
        
        $scope.handle = function(){
            mensaje("hola es un mensaje de prueba")
@@ -21,6 +23,8 @@ define(['eon_componentes/publicaciones/publicaciones.module'], function (compone
           descripcion: 'je je'
         }
       ]
+
+      $scope.$parent.eonSite.titulo = 'Listado de Noticias';
 
       vm.titulo = "Listado de Noticias";
     });
