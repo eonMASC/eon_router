@@ -23,14 +23,12 @@ function (angularAMD) {
   ]);
 
   componente.config(
-    function ($stateProvider, registerRoutesProvider) {
-
-      registerRoutesProvider.register([{name:"Robert"}]);
-
+    function ($stateProvider) {        
+      //registerStatesProvider.register("./eon_componentes/publicaciones/config.json");      
+               
       console.log('Modulo configurado');
 
       // Now set up the states
-
       $stateProvider
         .state('publicaciones', 
           angularAMD.route({
