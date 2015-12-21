@@ -49,7 +49,7 @@ exports.index = function (req, res) {
 							titulo: 'Test Bloque 1',
 							componente: 'eon_componentes/publicaciones/publicaciones.module.js',
 							modo_visual: {
-								view: 
+								view: {}
 							} 
 						}
 
