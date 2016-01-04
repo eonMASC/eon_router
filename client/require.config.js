@@ -31,7 +31,6 @@ require.config({
 
     'angularAMD': 'bower_components/angularAMD/angularAMD.min',
     'oclazyload': 'bower_components/oclazyload/dist/ocLazyLoad.require',
-    'angularAMD': 'bower_components/angularAMD/angularAMD.min',
     'ngload': 'bower_components/angularAMD/ngload' 
   },
 
@@ -75,18 +74,17 @@ require.config({
     'app_interfaz': [ 'fuse_core_end','angular_core' ],
     'app_pagina_sample': [ 'angular_core' ],
 
-    'app_start' : [         
+    'app_start' : [      
+        'angularAMD',   
+        'oclazyload',
         'fuse_core_end',
         'app_pagina_sample',
         'app_interfaz'        
     ],   
 
     'angularAMD': [ 'angular_core' ],
-    'oclazyload': [ 'angular_core' ],
-
-    'angularAMD': [ 'angular' ],
     'ngload': [ 'angularAMD' ],
-    'oclazyload': [ 'angular' ]
+    'oclazyload': [ 'angular_core' ]
 
     // 'readerJSON':['angular']
   },

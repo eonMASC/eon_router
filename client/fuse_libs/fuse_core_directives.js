@@ -1003,7 +1003,16 @@
                 {
                     uisref = uisref + '(' + angular.toString(item.stateParams) + ')';
                 }
-            }
+            } 
+            // else {
+            //     if ( angular.isDefined(item.url))
+            //     {
+            //         uisref = item.url;
+            //     }
+
+            //     console.log('Estado Virtual: ',uisref);
+                
+            // }
 
             return uisref;
         }

@@ -23,7 +23,7 @@ define(['eon_componentes/publicaciones/publicaciones.module'], function (compone
         }
       ]
 
-      $scope.$parent.eonSite.titulo = 'Listado de Noticias';
+      //$scope.$parent.eonSite.titulo = 'Listado de Noticias';
 
       vm.titulo = "Listado de Noticias";
     });

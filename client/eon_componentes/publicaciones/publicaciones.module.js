@@ -1,6 +1,5 @@
 define([
   'app.includes',
- // 'eon_componentes/publicaciones/directives/slidePublicaciones',
   'eon_servicios/serviciosEON'
 ], 
 
@@ -27,24 +26,31 @@ function (angularAMD){//,slidePublicaciones) {
 
       registerRoutesProvider.register([{name:"Robert"}]);
 
-      // Now set up the states
-
+   
       $stateProvider
-        .state('eonSite.publicaciones', 
+        .state('app.publicaciones', 
           angularAMD.route({
               url: '/publicaciones',
-              templateUrl: 'eon_componentes/publicaciones/listado/listado.html',
-              controller: 'ListadoCtrl as vm',
-              controllerUrl: 'eon_componentes/publicaciones/listado/listado.controller'
+              views  : {
+                  'content@app': {
+                      templateUrl: 'eon_componentes/publicaciones/listado/listado.html',
+                      controller: 'ListadoCtrl as vm'          
+                  }
+              },
+              controllerUrl: 'eon_componentes/publicaciones/listado/listado.controller'              
           })
         );
         
-      $stateProvider.state('eonSite.publicacionesficha', 
+      $stateProvider.state('app.publicacionesficha', 
           angularAMD.route({
               url: '/publicaciones/:id',
-              templateUrl: 'eon_componentes/publicaciones/ficha/ficha.html',
-              controller: 'FichaCtrl as vm',
-              controllerUrl: 'eon_componentes/publicaciones/ficha/ficha.controller'
+              views  : {
+                  'content@app': {
+                      templateUrl: 'eon_componentes/publicaciones/ficha/ficha.html',
+                      controller: 'FichaCtrl as vm'                      
+                  }
+              },
+              controllerUrl: 'eon_componentes/publicaciones/ficha/ficha.controller'           
           })
         );
 
