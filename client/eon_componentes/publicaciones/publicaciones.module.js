@@ -22,37 +22,37 @@ function (angularAMD){//,slidePublicaciones) {
   ]);
   //componente.constant("Publicacion",{rutaBase:'eon_componentes/publicaciones/'});
   componente.config(
-    function ($stateProvider, registerRoutesProvider) {
+    function ($stateProvider) {
 
-      registerRoutesProvider.register([{name:"Robert"}]);
+      //registerRoutesProvider.register([{name:"Robert"}]);
 
    
-      $stateProvider
-        .state('app.publicaciones', 
-          angularAMD.route({
-              url: '/publicaciones',
-              views  : {
-                  'content@app': {
-                      templateUrl: 'eon_componentes/publicaciones/listado/listado.html',
-                      controller: 'ListadoCtrl as vm'          
-                  }
-              },
-              controllerUrl: 'eon_componentes/publicaciones/listado/listado.controller'              
-          })
-        );
+      // $stateProvider
+      //   .state('app.publicaciones', 
+      //     angularAMD.route({
+      //         url: '/publicaciones',
+      //         views  : {
+      //             'content@app': {
+      //                 templateUrl: 'eon_componentes/publicaciones/listado/listado.html',
+      //                 controller: 'ListadoCtrl as vm'          
+      //             }
+      //         },
+      //         controllerUrl: 'eon_componentes/publicaciones/listado/listado.controller'              
+      //     })
+      //   );
         
-      $stateProvider.state('app.publicacionesficha', 
-          angularAMD.route({
-              url: '/publicaciones/:id',
-              views  : {
-                  'content@app': {
-                      templateUrl: 'eon_componentes/publicaciones/ficha/ficha.html',
-                      controller: 'FichaCtrl as vm'                      
-                  }
-              },
-              controllerUrl: 'eon_componentes/publicaciones/ficha/ficha.controller'           
-          })
-        );
+      // $stateProvider.state('app.publicacionesficha', 
+      //     angularAMD.route({
+      //         url: '/publicaciones/:id',
+      //         views  : {
+      //             'content@app': {
+      //                 templateUrl: 'eon_componentes/publicaciones/ficha/ficha.html',
+      //                 controller: 'FichaCtrl as vm'                      
+      //             }
+      //         },
+      //         controllerUrl: 'eon_componentes/publicaciones/ficha/ficha.controller'           
+      //     })
+      //   );
 
   });
 
