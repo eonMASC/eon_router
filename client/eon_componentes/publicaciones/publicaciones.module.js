@@ -20,7 +20,7 @@ function (angularAMD){//,slidePublicaciones) {
     'ngAria',
     'serviciosEON'
   ]);
-
+  //componente.constant("Publicacion",{rutaBase:'eon_componentes/publicaciones/'});
   componente.config(
     function ($stateProvider, registerRoutesProvider) {
 
@@ -56,8 +56,11 @@ function (angularAMD){//,slidePublicaciones) {
 
   });
 
-  componente.run(function(directiveLoader,readerJSON){
+  componente.run(function(directiveLoader,readerJSON, registerStates){
     console.log("Modulo corriendo");
+
+    // registro de estados de modos visuales del componente
+    registerStates('eon_componentes/publicaciones/','config.json');
 
     var $confg = readerJSON.getData("/eon_componentes/publicaciones/config.json").then(function(response){
       

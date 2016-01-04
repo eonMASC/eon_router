@@ -18,22 +18,49 @@ function (angularAMD) {
         }
         return objFn;    
     }]);
-    //Provider thats register all routes of something
-    modulo.provider("registerRoutes", function($stateProvider){
-      var objFn = {};
-      var objData = [];
-      objFn.register = function(object){
-        console.log("STATE_PROVIDER:", object);
-        objData = object;
-        
-      }
-      objFn.$get = function(){
-        //return new objFn.register($state);
-        return objData;
-      }
-      return objFn;
-    });
+    modulo.provider("registerStates", function($stateProvider){
+        var data;
+        return {                  
+          $get: function($http, readerJSON, $state){
+            return function(path, fileName){              
+              readerJSON.getData(path + fileName).then(function(response){
+                if(response.data.modos_visuales){
+                  //console.log(response.data.modos_visuales);
+                  var states = response.data.modos_visuales;
+                  angular.forEach(states, function(state, key){
+                    //console.log(state);
+                    var name = state.nameUrl;
+                    var vista = state.vista;
+                    var controller = state.controller;                    
+                    var tplUrl = path + vista + '/' + vista +'.html';
+                    var as = (state.controllerAs && state.controllerAs != "")? " as " + state.controllerAs : " as vm";
+                    var controllerUrl = path + vista + '/' + vista + '.controller';
+                    var params = state.params != ""? "/" + state.params : "";
+                    var url = state.url;
 
+                    var configState = {
+                        url: url + params,
+                        templateUrl: tplUrl,
+                        controller: controller + as,
+                        controllerUrl: controllerUrl
+                    }
+                    /*console.log(tplUrl);
+                    console.log(controller);
+                    console.log(controllerUrl);*/                    
+                    $stateProvider.state('eonSite.' + name, 
+                      angularAMD.route(configState)
+                    );  
+                    console.log("Estado y modos visual " + name + " registrado!");                  
+                  });
+
+                } else {
+                  console.log("Error: no existe 'modos_visuales' en el json");
+                }
+              });              
+            }
+          }    
+        }
+      }); 
     modulo.service('directiveLoader',["$ocLazyLoad",function($ocLazyLoad){
 
         var obj={
@@ -58,10 +85,7 @@ function (angularAMD) {
         };
 
         return obj;
-    }]);
-
-
-    
+    }]); 
   return modulo;
 
 });
