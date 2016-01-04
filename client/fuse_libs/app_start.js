@@ -1,0 +1,456 @@
+(function ()
+{
+    'use strict';
+
+    console.log('Inicio');
+
+    /**
+     * Main module of the Fuse
+     */
+    angular
+        .module('fuse', [
+
+            // Core
+            'app.core',
+
+            // Navigation
+            'app.navigation',
+
+            // Toolbar
+            'app.toolbar',
+
+            // Quick panel
+            'app.quick-panel',
+
+            // Sample
+            'app.sample'
+        ]);
+})();
+
+(function ()
+{
+    'use strict';
+
+    angular
+        .module('fuse')
+        .controller('MainController', MainController);
+
+    /** @ngInject */
+    function MainController($scope, $rootScope)
+    {
+        // Data
+
+        //////////
+
+        // Remove the splash screen
+        $scope.$on('$viewContentAnimationEnded', function (event)
+        {
+            if ( event.targetScope.$id === $scope.$id )
+            {
+                $rootScope.$broadcast('msSplashScreen::remove');
+            }
+        });
+    }
+})();
+
+(function ()
+{
+    'use strict';
+
+    angular
+        .module('fuse')
+        .run(runBlock);
+
+    /** @ngInject */
+    function runBlock($rootScope, $timeout, $state)
+    {
+
+        console.log('Run Block');
+
+        // Activate loading indicator
+        var stateChangeStartEvent = $rootScope.$on('$stateChangeStart', function ()
+        {
+            $rootScope.loadingProgress = true;
+        });
+
+        // De-activate loading indicator
+        var stateChangeSuccessEvent = $rootScope.$on('$stateChangeSuccess', function ()
+        {
+            $timeout(function ()
+            {
+                $rootScope.loadingProgress = false;
+            });
+        });
+
+        // Store state in the root scope for easy access
+        $rootScope.state = $state;
+
+        // Cleanup
+        $rootScope.$on('$destroy', function ()
+        {
+            stateChangeStartEvent();
+            stateChangeSuccessEvent();
+        })
+    }
+})();
+
+(function ()
+{
+    'use strict';
+
+    console.log('Rutas Code');
+
+    angular
+        .module('fuse')
+        .config(routeConfig);
+
+    /** @ngInject */
+    function routeConfig($stateProvider, $urlRouterProvider, $locationProvider)
+    {
+        $locationProvider.html5Mode(true);
+
+        $urlRouterProvider.otherwise('/sample');
+
+        console.log('Rutas Config');
+
+        // State definitions
+        $stateProvider
+            .state('app', {
+                abstract: true,
+                views   : {
+                    'main@'         : {
+                        templateUrl: 'app/core/layouts/vertical-navigation.html',
+                        controller : 'MainController as vm'
+                    },
+                    'toolbar@app'   : {
+                        templateUrl: 'app/toolbar/layouts/vertical-navigation/toolbar.html',
+                        controller : 'ToolbarController as vm'
+                    },
+                    'navigation@app': {
+                        templateUrl: 'app/navigation/layouts/vertical-navigation/navigation.html',
+                        controller : 'NavigationController as vm'
+                    },
+                    'quickPanel@app': {
+                        templateUrl: 'app/quick-panel/quick-panel.html',
+                        controller : 'QuickPanelController as vm'
+                    }
+                }
+            });
+    }
+
+})();
+
+(function ()
+{
+    'use strict';
+
+    angular
+        .module('fuse')
+        .controller('IndexController', IndexController);
+
+    /** @ngInject */
+    function IndexController(fuseTheming)
+    {
+        var vm = this;
+
+        // Data
+        vm.themes = fuseTheming.themes;
+
+        //////////
+    }
+})();
+
+(function ()
+{
+    'use strict';
+
+    angular
+        .module('fuse');
+})();
+
+
+(function ()
+{
+    'use strict';
+
+    angular
+        .module('fuse')
+        .factory('api', apiService);
+
+    /** @ngInject */
+    function apiService($resource)
+    {
+        /**
+         * You can use this service to define your API urls. The "api" service
+         * is designed to work in parallel with "apiResolver" service which you can
+         * find in the "app/core/services/api-resolver.service.js" file.
+         *
+         * You can structure your API urls whatever the way you want to structure them.
+         * You can either use very simple definitions, or you can use multi-dimensional
+         * objects.
+         *
+         * Here's a very simple API url definition example:
+         *
+         *      api.getBlogList = $resource('http://api.example.com/getBlogList');
+         *
+         * While this is a perfectly valid $resource definition, most of the time you will
+         * find yourself in a more complex situation where you want url parameters:
+         *
+         *      api.getBlogById = $resource('http://api.example.com/blog/:id', {id: '@id'});
+         *
+         * You can also define your custom methods. Custom method definitions allows you to
+         * add hardcoded parameters to your API calls that you want them to be sent every
+         * time you make that API call:
+         *
+         *      api.getBlogById = $resource('http://api.example.com/blog/:id', {id: '@id'}, {
+         *         'getFromHomeCategory' : {method: 'GET', params: {blogCategory: 'home'}}
+         *      });
+         *
+         * In addition to these definitions, you can also create multi-dimensional objects.
+         * They are nothing to do with the $resource object, it's just a more convenient
+         * way that we have created for you to packing your related API urls together:
+         *
+         *      api.blog = {
+         *          list     : $resource('http://api.example.com/blog);
+         *          getById  : $resource('http://api.example.com/blog/:id', {id: '@id'});
+         *          getByDate: $resource('http://api.example.com/blog/:date', {id: '@date'},
+         *              'get': {method: 'GET', params: {getByDate: true}}
+         *          );
+         *      }
+         *
+         * If you look at the last example from above, we overrode the 'get' method to put a
+         * hardcoded parameter. Now every time we make the "getByDate" call, the {getByDate: true}
+         * object will also be sent along with whatever data we are sending.
+         *
+         * All the above methods are using standard $resource service. You can learn more about
+         * it at: https://docs.angularjs.org/api/ngResource/service/$resource
+         *
+         * -----
+         *
+         * After you defined your API urls, you can use them in Controllers, Services and even
+         * in the UIRouter state definitions.
+         *
+         * If we use the last example from above, you can do an API call in your Controllers and
+         * Services like this:
+         *
+         *      function MyController (api)
+         *      {
+         *          // Get the blog list
+         *          api.blog.list.get({},
+         *
+         *              // Success
+         *              function (response)
+         *              {
+         *                  console.log(response);
+         *              },
+         *
+         *              // Error
+         *              function (response)
+         *              {
+         *                  console.error(response);
+         *              }
+         *          );
+         *
+         *          // Get the blog with the id of 3
+         *          var id = 3;
+         *          api.blog.getById.get({'id': id},
+         *
+         *              // Success
+         *              function (response)
+         *              {
+         *                  console.log(response);
+         *              },
+         *
+         *              // Error
+         *              function (response)
+         *              {
+         *                  console.error(response);
+         *              }
+         *          );
+         *
+         *          // Get the blog with the date by using custom defined method
+         *          var date = 112314232132;
+         *          api.blog.getByDate.get({'date': date},
+         *
+         *              // Success
+         *              function (response)
+         *              {
+         *                  console.log(response);
+         *              },
+         *
+         *              // Error
+         *              function (response)
+         *              {
+         *                  console.error(response);
+         *              }
+         *          );
+         *      }
+         *
+         * Because we are directly using $resource servive, all your API calls will return a
+         * $promise object.
+         *
+         * --
+         *
+         * If you want to do the same calls in your UI Router state definitions, you need to use
+         * "apiResolver" service we have prepared for you:
+         *
+         *      $stateProvider.state('app.blog', {
+         *          url      : '/blog',
+         *          views    : {
+         *               'content@app': {
+         *                   templateUrl: 'app/main/apps/blog/blog.html',
+         *                   controller : 'BlogController as vm'
+         *               }
+         *          },
+         *          resolve  : {
+         *              Blog: function (apiResolver)
+         *              {
+         *                  return apiResolver.resolve('blog.list@get');
+         *              }
+         *          }
+         *      });
+         *
+         *  You can even use parameters with apiResolver service:
+         *
+         *      $stateProvider.state('app.blog.show', {
+         *          url      : '/blog/:id',
+         *          views    : {
+         *               'content@app': {
+         *                   templateUrl: 'app/main/apps/blog/blog.html',
+         *                   controller : 'BlogController as vm'
+         *               }
+         *          },
+         *          resolve  : {
+         *              Blog: function (apiResolver, $stateParams)
+         *              {
+         *                  return apiResolver.resolve('blog.getById@get', {'id': $stateParams.id);
+         *              }
+         *          }
+         *      });
+         *
+         *  And the "Blog" object will be available in your BlogController:
+         *
+         *      function BlogController(Blog)
+         *      {
+         *          var vm = this;
+         *
+         *          // Data
+         *          vm.blog = Blog;
+         *
+         *          ...
+         *      }
+         */
+
+        var api = {};
+
+        // Base Url
+        api.baseUrl = 'app/data/';
+
+        api.sample = $resource(api.baseUrl + 'sample/sample.json');
+
+        api.quickPanel = {
+            activities: $resource(api.baseUrl + 'quick-panel/activities.json'),
+            contacts  : $resource(api.baseUrl + 'quick-panel/contacts.json'),
+            events    : $resource(api.baseUrl + 'quick-panel/events.json'),
+            notes     : $resource(api.baseUrl + 'quick-panel/notes.json')
+        };
+
+        return api;
+    }
+
+})();
+
+(function ()
+{
+    'use strict';
+
+    angular
+        .module('fuse')
+        .config(config);
+
+    /** @ngInject */
+    function config()
+    {
+        // Put your custom configurations here
+    }
+
+})();
+
+/*Quitar de aqui para abajo */
+
+(function ()
+{
+    'use strict';
+
+    angular
+        .module('app.sample', [])
+        .config(config);
+
+    /** @ngInject */
+    function config($stateProvider, $translatePartialLoaderProvider, msNavigationServiceProvider)
+    {
+        // State
+        $stateProvider
+            .state('app.sample', {
+                url    : '/sample',
+                views  : {
+                    'content@app': {
+                        templateUrl: 'app/main/sample/sample.html',
+                        controller : 'SampleController as vm'
+                    }
+                },
+                resolve: {
+                    SampleData: function (apiResolver)
+                    {
+                        return apiResolver.resolve('sample@get');
+                    }
+                }
+            });
+
+        // Translation
+        $translatePartialLoaderProvider.addPart('app/main/sample');
+
+        // Navigation
+        msNavigationServiceProvider.saveItem('fuse', {
+            title : 'SAMPLE',
+            group : true,
+            weight: 1
+        });
+
+        msNavigationServiceProvider.saveItem('fuse.sample', {
+            title      : 'Sample',
+            icon       : 'icon-tile-four',
+            state      : 'app.sample',
+            /*stateParams: {
+                'param1': 'page'
+            },*/
+            translation: 'SAMPLE.SAMPLE_NAV',
+            weight     : 1
+        });
+    }
+})();
+
+(function ()
+{
+    'use strict';
+
+    angular
+        .module('app.sample')
+        .controller('SampleController', SampleController);
+
+    /** @ngInject */
+    function SampleController(SampleData)
+    {
+        var vm = this;
+
+        // Data
+        vm.helloText = SampleData.data.helloText;
+
+        // Methods
+
+        //////////
+    }
+})();
+
+
+angular.bootstrap(document, ['fuse']);

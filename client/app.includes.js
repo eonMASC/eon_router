@@ -1,16 +1,9 @@
-define([
+define([	
 	'angularAMD',
-	'angular',
-	'angular-ui-router',
-	'angular-resource',
-	'angular-animate',
-	'angular-cookies',
-	'angular-aria',
-	'angular-messages',
-	'angular-material',
-	'angular-resource',
-	'angular-sanitize',
-	'oclazyload'
+	'jquery_interfaz',
+	'oclazyload',
+	'angular_sortable',
+	'fuse_core_end'
 ],
 
 
