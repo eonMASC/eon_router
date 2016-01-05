@@ -38,7 +38,7 @@
         });
 
         msNavigationServiceProvider.saveItem('fuse.sample', {
-            title      : 'Sample',
+            title      : 'Sampleet',
             icon       : 'icon-tile-four',
             state      : 'app.sample',
             /*stateParams: {

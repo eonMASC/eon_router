@@ -74,15 +74,13 @@ require.config({
     'app_interfaz': [ 'fuse_core_end','angular_core' ],
     'app_pagina_sample': [ 'angular_core' ],
 
-    'app_start' : [      
-        'angularAMD',   
+    'app' : [         
         'oclazyload',
         'fuse_core_end',
-        'app_pagina_sample',
         'app_interfaz'        
     ],   
 
-    'angularAMD': [ 'angular_core' ],
+    'angularAMD': [ 'base_libs' ],
     'ngload': [ 'angularAMD' ],
     'oclazyload': [ 'angular_core' ]
 
@@ -90,5 +88,5 @@ require.config({
   },
 
   // kick start application
-  deps: ['app_start']
+  deps: ['app']
 });

@@ -1,156 +1,266 @@
 define([
-  'app.includes'
+    'angularAMD'
 ], 
 
-
 function (angularAMD) {
+    
+    'use strict';
 
-  'use strict';
+    /**
+     * Main module of the Fuse
+     */
+    var Modulo = angular.module('fuse', [
+        // Core
+        'app.core',
 
-  var proveedorEstados = {};
+        // Navigation
+        'app.navigation',
 
-  var App = angular.module('eonRouter', [
-    'ui.router',
-    'ngCookies',
-    'ngResource',
-    'ngSanitize',
-    'ngAnimate',
-    'ngMaterial',
-    'ngMessages',
-    'ngAria',
-    'oc.lazyLoad',
-    /*'readJSON'*/
-  ]);
+        // Toolbar
+        'app.toolbar',
 
-  App.config(function ($stateProvider, $urlRouterProvider, $locationProvider, $mdThemingProvider) {
+        // Quick panel
+        'app.quick-panel',
 
-    $locationProvider.html5Mode(true);
-    $urlRouterProvider.otherwise(callBackOtherwise);
+        // ocLazyLoad
+        'oc.lazyLoad'
+    ]);
 
-    $mdThemingProvider.theme('default')
-      .primaryPalette('blue')
-      .accentPalette('indigo')
-      .warnPalette('red');
+    Modulo.config(routeConfig);        
+        
+
+    /** @ngInject */
+    function routeConfig($stateProvider, $urlRouterProvider, $locationProvider, msNavigationServiceProvider, $ocLazyLoadProvider)
+    {
+        $locationProvider.html5Mode(true);
+
+        $ocLazyLoadProvider.config({
+          debug: true
+        });
+
+        //$urlRouterProvider.otherwise('/sample');
+        $urlRouterProvider.otherwise(callBackOtherwise);
+
+        // State definitions
+        $stateProvider
+            .state('app', {
+                abstract: true,
+                views   : {
+                    'main@'         : {
+                        templateUrl: 'app/core/layouts/vertical-navigation.html',
+                        controller : 'MainController as vm'
+                    },
+                    'toolbar@app'   : {
+                        templateUrl: 'app/toolbar/layouts/vertical-navigation/toolbar.html',
+                        controller : 'ToolbarController as vm'
+                    },
+                    'navigation@app': {
+                        templateUrl: 'app/navigation/layouts/vertical-navigation/navigation.html',
+                        controller : 'NavigationController as vm'
+                    },
+                    'quickPanel@app': {
+                        templateUrl: 'app/quick-panel/quick-panel.html',
+                        controller : 'QuickPanelController as vm'
+                    }
+                }
+            });
+
+        $stateProvider.state({
+            name: 'app.notfound',
+            url: '/404',
+            views: {
+                'content@app': {
+                    templateUrl: 'views/404/404.html'                    
+                }
+            }            
+        });  
+
+        msNavigationServiceProvider.saveItem('fuse.publicaciones', {
+            title      : 'Publicaciones',
+            icon       : 'icon-tile-four',
+            state      : 'app.publicaciones',
+            url        : '/publicaciones'
+        });
+
+         msNavigationServiceProvider.saveItem('fuse.PrimeraPagina', {
+            title      : 'Primera Pagina',
+            icon       : 'icon-tile-four',
+            state      : 'app.PrimeraPagina',
+            url        : '/primera_pagina'
+        });
+
+        msNavigationServiceProvider.saveItem('fuse.PubMartin', {
+            title      : 'Publicacion de Martin',
+            icon       : 'icon-tile-four',
+            state      : 'app.PubMartin',
+            url        : '/publicaciones/martin'
+        });
+    }
 
 
-    $stateProvider.state({
-        name: 'eonSite',
-        abstract: true,
-        templateUrl: 'views/eon/cascaron.html',
-        controller: 'EonSiteCtrl as eonSite'
-    });
+    Modulo.run(runBlock);
 
-    /*
-    $stateProvider.state({
-        name: 'eonSite.inicio',
-        url: '/',
-        templateUrl: 'views/home/home.html',
-        controller: 'HomeCtrl'
-    });
-    */
+    /** @ngInject */
+    function runBlock($rootScope, $timeout, $state)
+    {
 
-    $stateProvider.state({
-        name: 'eonSite.notfound',
-        url: '/404',
-        templateUrl: 'views/404/404.html',
-        //controller: 'HomeCtrl'
-    });  
+        // Activate loading indicator
+        var stateChangeStartEvent = $rootScope.$on('$stateChangeStart', function ()
+        {
+            $rootScope.loadingProgress = true;
+        });
 
-  });
+        // De-activate loading indicator
+        var stateChangeSuccessEvent = $rootScope.$on('$stateChangeSuccess', function ()
+        {
+            $timeout(function ()
+            {
+                $rootScope.loadingProgress = false;
+            });
+        });
 
-  App.provider('$newState', function($stateProvider){
-        this.$get = function($state){
+        // Store state in the root scope for easy access
+        $rootScope.state = $state;
+
+        // Cleanup
+        $rootScope.$on('$destroy', function ()
+        {
+            stateChangeStartEvent();
+            stateChangeSuccessEvent();
+        })
+    }
+
+    Modulo.provider('$newState', newStateProvider);
+
+    function newStateProvider($stateProvider)
+    {
+        this.$get = function(){
             return {
-                /**
-                 * @function app.dashboard.dashboardStateProvider.addState
-                 * @memberof app.dashboard
-                 * @param {string} title - the title used to build state, url & find template
-                 * @param {string} controllerAs - the controller to be used, if false, we don't add a controller (ie. 'UserController as user')
-                 * @param {string} templatePrefix - either 'content', 'presentation' or null
-                 * @author Alex Boisselle
-                 * @description adds states to the dashboards state provider dynamically
-                 * @returns {object} user - token and id of user
-                 */
                 addPageState: function(nombre, url, data) {
-                    $stateProvider.state('eonSite.' + nombre, {
-                          url: '/' + (nombre == 'pagina_inicio' ? '' : nombre) ,                          
-                          templateUrl: url,
-                          controller: 'PageViewerCtrl as vm',
-                          data: data   
+                    $stateProvider.state('app.' + nombre, {
+                        url: '/' + (nombre == 'pagina_inicio' ? '' : nombre) ,                          
+                        views: {
+                            'content@app': {
+                                templateUrl: url,
+                                controller : 'PageViewerCtrl as vm',
+                                data: data
+                            }
+                        }                           
                     });
                 }
             }
         }
-    });
-
-  /*
-  App.controller('HomeCtrl', function($scope){
-    var vm = this;
-
-    $scope.$parent.eonSite.titulo = 'Inicio';
-
-  });
-*/
-
-  App.controller('PageViewerCtrl', function($scope, $state, $ocLazyLoad){
-    var vm = this;
-
-    $scope.$parent.eonSite.titulo = $state.current.data.titulo;
-
-  });
-
-  App.controller('EonSiteCtrl', function($mdSidenav, $state, $mdDialog){
-    var vm = this;           
-
-    vm.onClickMenu = function () {
-        $mdSidenav('left').toggle();
-    };
-
-    vm.viewState = function (ev){
-      $mdDialog.show(
-        $mdDialog.alert()
-          .clickOutsideToClose(true)
-          .title('Aviso')
-          .textContent('Ver Estado: ' + $state.current.url)
-          .ariaLabel('Alert Dialog Demo')
-          .ok('Got it!')
-          .targetEvent(ev)
-      );
     }
 
-    vm.titulo = "durango.gob.mx";
+    function callBackOtherwise($injector, $location)
+    {
+        var $http = $injector.get('$http');
+        var $ocLazyLoad = $injector.get('$ocLazyLoad');
+        var $urlRouter = $injector.get('$urlRouter');
+        //var $rootScope = $injector.get('$rootScope');
+        var $newState = $injector.get('$newState');
 
-  });
+        var sState = $location.url();       
 
-  function callBackOtherwise($injector, $location){
-    var $http = $injector.get('$http');
-    var $ocLazyLoad = $injector.get('$ocLazyLoad');
-    var $urlRouter = $injector.get('$urlRouter');
-    //var $rootScope = $injector.get('$rootScope');
-    var $newState = $injector.get('$newState');
+        $http.post('/mapper/url', {url: $location.url()}).
+            then(function success(respuesta){
 
-    var sState = $location.url();       
+                //console.log('Respuesta: ',respuesta.data);
 
-    $http.post('/mapper/url',{url: $location.url()}).
-      then(function success(respuesta){
-        
-        //console.log('Respuesta: ',respuesta.data);
-        
-        if(respuesta.data.success){
-          if(respuesta.data.map.tipo == 'componente'){
-            $ocLazyLoad.load(respuesta.data.map.componenteURL).then(function(){
-              $urlRouter.sync();
+                if(respuesta.data.success){
+                  if(respuesta.data.map.tipo == 'componente'){
+                    console.log('Por cargar...');
+
+                    /*require([respuesta.data.map.componenteURL], function(componente){
+                        console.log('... cargado!', componente);
+                        //$urlRouter.sync();
+                    });*/
+
+                    /*define(['angularAMD', ], function (angularAMD) {
+                        angularAMD.processQueue();
+                        $urlRouter.sync();
+                    });*/
+
+                    $ocLazyLoad.load(respuesta.data.map.componenteURL).then(function(){
+                        console.log('Refrescara');
+                        $urlRouter.sync();
+                    });
+                  } else if(respuesta.data.map.tipo == 'pagina'){
+                    $newState.addPageState(respuesta.data.map.nombre, respuesta.data.map.url, {titulo: respuesta.data.map.paginaTitulo});
+                    $urlRouter.sync();
+                  }          
+                } else {            
+                  $location.url('/404');
+                }            
             });
-          } else if(respuesta.data.map.tipo == 'pagina'){
-            $newState.addPageState(respuesta.data.map.nombre, respuesta.data.map.url, {titulo: respuesta.data.map.paginaTitulo});
-            $urlRouter.sync();
-          }          
-        } else {            
-          $location.url('/404');
-        }            
-      });
-            
-  }
+                
+    }
 
-  return angularAMD.bootstrap(App);
+    Modulo
+        .factory('api', apiService);
+
+    /** @ngInject */
+    function apiService($resource)
+    {
+        var api = {};
+
+        // Base Url
+        api.baseUrl = 'app/data/';
+
+        api.sample = $resource(api.baseUrl + 'sample/sample.json');
+
+        api.quickPanel = {
+            activities: $resource(api.baseUrl + 'quick-panel/activities.json'),
+            contacts  : $resource(api.baseUrl + 'quick-panel/contacts.json'),
+            events    : $resource(api.baseUrl + 'quick-panel/events.json'),
+            notes     : $resource(api.baseUrl + 'quick-panel/notes.json')
+        };
+
+        return api;
+    }
+
+    Modulo
+        .controller('MainController', MainController)
+        .controller('PageViewerCtrl', PageViewerController)
+        .controller('IndexController', IndexController);
+
+    /** Control de Todo Body */
+    function IndexController(fuseTheming)
+    {
+        var vm = this;
+
+        // Data
+        vm.themes = fuseTheming.themes;
+
+        //////////
+    }
+
+    /** Control de Paginas Libres */
+    function PageViewerController($scope, $state, $ocLazyLoad)
+    {
+        var vm = this;
+
+        //$scope.$parent.eonSite.titulo = $state.current.data.titulo;
+
+    }
+
+    /** Control Principal de interfaz FUSE */
+    function MainController($scope, $rootScope)
+    {
+        // Data
+
+        //////////
+
+        // Remove the splash screen
+        $scope.$on('$viewContentAnimationEnded', function (event)
+        {
+            if ( event.targetScope.$id === $scope.$id )
+            {
+                $rootScope.$broadcast('msSplashScreen::remove');
+            }
+        });
+    }
+
+    return angularAMD.bootstrap(Modulo);
+
 });

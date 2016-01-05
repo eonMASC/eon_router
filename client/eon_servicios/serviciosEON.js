@@ -91,6 +91,7 @@ function (angularAMD) {
 
         return obj;
     }]); 
+
   return modulo;
 
 });

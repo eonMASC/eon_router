@@ -9,7 +9,7 @@
 
     <div ms-navigation-item layout="row">
 
-        <div class="ms-navigation-button" ng-if="!node.uisref && node.title">
+        <div class="ms-navigation-button" ng-if="!node.uisref && node.title && !node.url">
             <i class="icon s16 {{node.icon}}" ng-if="node.icon"></i>
             <span class="title" translate="{{node.translate}}" flex>{{node.title}}</span>
             <span class="badge white-fg" ng-style="{'background': node.badge.color}" ng-if="node.badge">{{node.badge.content}}</span>
