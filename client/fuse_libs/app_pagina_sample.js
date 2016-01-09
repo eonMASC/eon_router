@@ -11,10 +11,10 @@
     {
         // State
         $stateProvider
-            .state('app.sample', {
+            .state('sitio.sample', {
                 url    : '/sample',
                 views  : {
-                    'content@app': {
+                    'content@sitio': {
                         templateUrl: 'app/main/sample/sample.html',
                         controller : 'SampleController as vm'
                     }

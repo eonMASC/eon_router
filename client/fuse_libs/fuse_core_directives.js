@@ -776,10 +776,10 @@
 
     angular
         .module('app.core')
-        .provider('msNavigationService', msNavigationServiceProvider)
         .controller('MsNavigationController', MsNavigationController)
         // Vertical
         .directive('msNavigation', msNavigationDirective)
+        .provider('msNavigationService', msNavigationServiceProvider)
         .controller('MsNavigationNodeController', MsNavigationNodeController)
         .directive('msNavigationNode', msNavigationNodeDirective)
         .directive('msNavigationItem', msNavigationItemDirective)

@@ -31,7 +31,9 @@ require.config({
 
     'angularAMD': 'bower_components/angularAMD/angularAMD.min',
     'oclazyload': 'bower_components/oclazyload/dist/ocLazyLoad.require',
-    'ngload': 'bower_components/angularAMD/ngload' 
+    'ngload': 'bower_components/angularAMD/ngload',
+
+    'sassjs': 'bower_components/sass.js/dist/sass',
   },
 
   // Add angular modules that does not support AMD out of the box, put it in a shim
@@ -50,6 +52,7 @@ require.config({
         'base_rangy',
         'base_otros',
         'jquery_utils',
+        'angularAMD'
     ],
     'angular_sortable' : [ 'angular_core' ],
     'angular_graficas' : [ 'base_graficas', 'angular_core' ],
@@ -65,11 +68,11 @@ require.config({
         'angular_textangular',
         'angular_varios'
     ],
-    'fuse_core_services' : [ 'fuse_core_start' ],
+    'fuse_core_directives' : [ 'fuse_core_start' ],
+    'fuse_core_services' : [ 'fuse_core_directives' ],
     'fuse_core_filters' : [ 'fuse_core_services' ],
     'fuse_core_theming' : [ 'fuse_core_filters' ],
-    'fuse_core_directives' : [ 'fuse_core_theming' ],
-    'fuse_core_end' : [ 'fuse_core_directives' ],
+    'fuse_core_end' : [ 'fuse_core_theming' ],
     
     'app_interfaz': [ 'fuse_core_end','angular_core' ],
     'app_pagina_sample': [ 'angular_core' ],
@@ -77,7 +80,7 @@ require.config({
     'app' : [         
         'oclazyload',
         'fuse_core_end',
-        'app_interfaz'        
+        'app_interfaz'  
     ],   
 
     'angularAMD': [ 'base_libs' ],

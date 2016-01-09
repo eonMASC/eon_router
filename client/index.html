@@ -7,44 +7,15 @@
     <title>eonRouter</title>
 
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
     <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
 
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
-    
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-    <link rel="stylesheet" href="styles/app.css">
     <link rel="stylesheet" href="styles/vendor.css">
-
-    <style type="text/css">
-      body,
-      body > div {
-          max-width: 100%;
-          max-height: 100%;
-          overflow: hidden;
-      }
-
-      body > div {
-          height: 100%;
-      }
-
-      .nav-header {
-          flex-shrink: 0;
-          z-index: 2;
-      }
-
-      .nav-header h1,
-      .nav-header h4 {
-          color: white;
-          text-align: center;
-      }
-
-      .nav-header a.logo {
-          text-decoration: none;
-      }
-    </style>
+    <link rel="stylesheet" href="styles/app.css">
 
   </head>
   <body md-theme="{{vm.themes.active.name}}" md-theme-watch ng-controller="IndexController as vm"
@@ -403,8 +374,6 @@
         <!-- / SPLASH SCREEN -->
 
         <div id="main" class="animate-slide-up" ui-view="main" layout="column"></div>
-
-        <ms-theme-options></ms-theme-options>
 
         <script data-main="require.config" src="bower_components/requirejs/require.js"></script>
 
