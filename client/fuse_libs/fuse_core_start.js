@@ -17,7 +17,7 @@
                 //'datatables',
                 'gridshore.c3js.chart',
                 'nvd3',
-                'pascalprecht.translate',
+                //'pascalprecht.translate',
                 'timer',
                 'ui.router',
                 'uiGmapgoogle-maps',

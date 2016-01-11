@@ -7,9 +7,9 @@
         .config(config);
 
     /** @ngInject */
-    function config($translatePartialLoaderProvider)
+    function config()
     {
-        $translatePartialLoaderProvider.addPart('app/quick-panel');
+        //$translatePartialLoaderProvider.addPart('app/quick-panel');
     }
 })();
 
@@ -146,9 +146,9 @@
         .config(config);
 
     /** @ngInject */
-    function config($translatePartialLoaderProvider)
+    function config()
     {
-        $translatePartialLoaderProvider.addPart('app/toolbar');
+        //$translatePartialLoaderProvider.addPart('app/toolbar');
     }
 })();
 
@@ -161,7 +161,7 @@
         .controller('ToolbarController', ToolbarController);
 
     /** @ngInject */
-    function ToolbarController($rootScope, $mdSidenav, $translate, $mdToast)
+    function ToolbarController($rootScope, $mdSidenav, $mdToast)
     {
         var vm = this;
 
@@ -280,7 +280,7 @@
             }
 
             //Change the language
-            $translate.use(lang.code);
+            //$translate.use(lang.code);
         }
 
         /**
@@ -303,9 +303,9 @@
         .config(config);
 
     /** @ngInject */
-    function config($translatePartialLoaderProvider)
+    function config()
     {
-        $translatePartialLoaderProvider.addPart('app/navigation');
+        //$translatePartialLoaderProvider.addPart('app/navigation');
     }
 
 })();
