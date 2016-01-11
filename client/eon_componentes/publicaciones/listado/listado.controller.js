@@ -2,12 +2,9 @@ define(['eon_componentes/publicaciones/publicaciones.module'], function (compone
 
    componente.controller('ListadoCtrl', function ($scope, $ocLazyLoad) {
       var vm = this;       
-      $ocLazyLoad.load(['./eon_dependencias/royal_slider/royal_slider.js']);      
-
-       //LEER JSON CONFIG PARA OBTENER LOS MODOS VISUALES
-      /* var $confg = readerJSON.getData("/eon_componentes/publicaciones/config.json").then(function(response){
-           console.log(response.data);
-       });    */   
+      //$ocLazyLoad.load(['./eon_dependencias/royal_slider/royal_slider.js']).t;            
+      console.log("CONTROL ListadoCtrl corriendo!");
+        
        
        $scope.handle = function(){
            mensaje("hola es un mensaje de prueba")

@@ -135,6 +135,7 @@ function (angularAMD) {
     function newStateProvider($stateProvider)
     {
         this.$get = function(){
+
             return {
                 addPageState: function(nombre, url, data) {
                     $stateProvider.state('app.' + nombre, {

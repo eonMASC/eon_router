@@ -6,7 +6,8 @@
 			"controller":"ListadoCtrl", 
 			"controllerAs":"vm",
 			"url":"/publicaciones",
-			"params":""
+			"params":"",
+			"dependencias":[]
        },
        {
 			"nameUrl":"ficha",
@@ -14,7 +15,7 @@
 			"controller":"FichaCtrl", 
 			"controllerAs":"",
 			"url":"/publicaciones",
-			"params":":id"
+			"params":":id"			
 		}
    	],
 
