@@ -1,0 +1,171 @@
+#timeline {
+  position: relative;
+  height: auto;
+  padding-bottom: 64px;
+  /* Animations */ }
+  #timeline:before {
+    display: block;
+    position: absolute;
+    z-index: 10;
+    content: "";
+    width: 2px;
+    background: rgba(0, 0, 0, 0.08);
+    top: 0;
+    left: 50%;
+    bottom: 0;
+    margin-left: -1px; }
+  #timeline .ms-timeline-item {
+    overflow: hidden;
+    position: relative;
+    z-index: 20;
+    padding: 32px;
+    width: 100%;
+    margin: 0 auto;
+    max-width: 1200px; }
+    #timeline .ms-timeline-item .timeline-card {
+      order: 1; }
+      #timeline .ms-timeline-item .timeline-card ms-card {
+        padding-right: 84px; }
+    #timeline .ms-timeline-item .timeline-point {
+      position: absolute;
+      width: 56px;
+      height: 56px;
+      line-height: 56px;
+      text-align: center;
+      border-radius: 50%;
+      left: 50%;
+      margin: 16px 0 0 -28px;
+      order: 2; }
+      #timeline .ms-timeline-item .timeline-point md-icon {
+        color: #FFFFFF; }
+    #timeline .ms-timeline-item .timeline-detail {
+      flex: 50% 0 0;
+      padding-top: 28px;
+      order: 3; }
+      #timeline .ms-timeline-item .timeline-detail .time {
+        font-size: 15px;
+        padding-left: 68px; }
+      #timeline .ms-timeline-item .timeline-detail .event {
+        color: rgba(0, 0, 0, 0.54);
+        padding-left: 68px; }
+    #timeline .ms-timeline-item:nth-child(odd) .timeline-card {
+      flex-direction: row-reverse; }
+    #timeline .ms-timeline-item:nth-child(even) .timeline-card {
+      order: 3;
+      padding-right: 0; }
+      #timeline .ms-timeline-item:nth-child(even) .timeline-card ms-card {
+        padding-left: 84px; }
+    #timeline .ms-timeline-item:nth-child(even) .timeline-detail {
+      order: 1;
+      padding-left: 0;
+      text-align: right; }
+      #timeline .ms-timeline-item:nth-child(even) .timeline-detail .time, #timeline .ms-timeline-item:nth-child(even) .timeline-detail .event {
+        padding-right: 68px; }
+    #timeline .ms-timeline-item:first-child {
+      padding-top: 64px; }
+    #timeline .ms-timeline-item:last-child {
+      padding-bottom: 0; }
+  #timeline .ms-timeline-item.animate .timeline-card {
+    animation: slide-in-left 0.4s; }
+  #timeline .ms-timeline-item.animate .timeline-point {
+    animation: slide-in-bottom 0.4s; }
+  #timeline .ms-timeline-item.animate .timeline-detail {
+    animation: slide-in-right 0.4s; }
+  #timeline .ms-timeline-item:nth-child(even).animate .timeline-card {
+    animation: slide-in-right 0.4s; }
+  #timeline .ms-timeline-item:nth-child(even).animate .timeline-detail {
+    animation: slide-in-left 0.4s; }
+  #timeline.timeline-left .ms-timeline-item .timeline-card {
+    order: 1; }
+    #timeline.timeline-left .ms-timeline-item .timeline-card ms-card {
+      padding-right: 68px;
+      padding-left: 0;
+      margin-left: auto; }
+  #timeline.timeline-left .ms-timeline-item .timeline-detail {
+    order: 3;
+    text-align: left; }
+  #timeline.timeline-left .ms-timeline-item.animate .timeline-card {
+    animation: slide-in-left 0.4s; }
+  #timeline.timeline-left .ms-timeline-item.animate .timeline-detail {
+    animation: slide-in-right 0.4s; }
+  #timeline.timeline-right .ms-timeline-item .timeline-card {
+    order: 3; }
+    #timeline.timeline-right .ms-timeline-item .timeline-card ms-card {
+      padding-left: 68px;
+      padding-right: 0;
+      margin-right: auto; }
+  #timeline.timeline-right .ms-timeline-item .timeline-detail {
+    order: 1;
+    text-align: right; }
+    #timeline.timeline-right .ms-timeline-item .timeline-detail .time,
+    #timeline.timeline-right .ms-timeline-item .timeline-detail .event {
+      padding-right: 68px;
+      padding-left: 0; }
+  #timeline.timeline-right .ms-timeline-item.animate .timeline-card {
+    animation: slide-in-right 0.4s; }
+  #timeline.timeline-right .ms-timeline-item.animate .timeline-detail {
+    animation: slide-in-left 0.4s; }
+
+@media screen and (max-width: 800px) {
+  #timeline .ms-timeline-item .timeline-card,
+  #timeline.timeline-left .ms-timeline-item .timeline-card,
+  #timeline.timeline-right .ms-timeline-item .timeline-card {
+    order: 3; }
+    #timeline .ms-timeline-item .timeline-card ms-card,
+    #timeline.timeline-left .ms-timeline-item .timeline-card ms-card,
+    #timeline.timeline-right .ms-timeline-item .timeline-card ms-card {
+      padding: 0; }
+  #timeline .ms-timeline-item .timeline-point,
+  #timeline.timeline-left .ms-timeline-item .timeline-point,
+  #timeline.timeline-right .ms-timeline-item .timeline-point {
+    order: 1;
+    position: relative;
+    left: auto;
+    margin: 0 0 16px 0;
+    padding: 0; }
+  #timeline .ms-timeline-item .timeline-detail,
+  #timeline.timeline-left .ms-timeline-item .timeline-detail,
+  #timeline.timeline-right .ms-timeline-item .timeline-detail {
+    order: 2;
+    padding: 0;
+    margin-bottom: 16px; }
+    #timeline .ms-timeline-item .timeline-detail .time,
+    #timeline .ms-timeline-item .timeline-detail .event,
+    #timeline.timeline-left .ms-timeline-item .timeline-detail .time,
+    #timeline.timeline-left .ms-timeline-item .timeline-detail .event,
+    #timeline.timeline-right .ms-timeline-item .timeline-detail .time,
+    #timeline.timeline-right .ms-timeline-item .timeline-detail .event {
+      padding-right: 0;
+      padding-left: 0;
+      text-align: center; }
+  #timeline .ms-timeline-item:nth-child(even) .timeline-card,
+  #timeline.timeline-left .ms-timeline-item:nth-child(even) .timeline-card,
+  #timeline.timeline-right .ms-timeline-item:nth-child(even) .timeline-card {
+    order: 3; }
+    #timeline .ms-timeline-item:nth-child(even) .timeline-card ms-card,
+    #timeline.timeline-left .ms-timeline-item:nth-child(even) .timeline-card ms-card,
+    #timeline.timeline-right .ms-timeline-item:nth-child(even) .timeline-card ms-card {
+      padding: 0; }
+  #timeline .ms-timeline-item:nth-child(even) .timeline-point,
+  #timeline.timeline-left .ms-timeline-item:nth-child(even) .timeline-point,
+  #timeline.timeline-right .ms-timeline-item:nth-child(even) .timeline-point {
+    order: 1;
+    position: relative;
+    left: auto;
+    margin: 0 0 16px 0;
+    padding: 0; }
+  #timeline .ms-timeline-item:nth-child(even) .timeline-detail,
+  #timeline.timeline-left .ms-timeline-item:nth-child(even) .timeline-detail,
+  #timeline.timeline-right .ms-timeline-item:nth-child(even) .timeline-detail {
+    order: 2;
+    padding: 0;
+    margin-bottom: 16px; }
+    #timeline .ms-timeline-item:nth-child(even) .timeline-detail .time,
+    #timeline .ms-timeline-item:nth-child(even) .timeline-detail .event,
+    #timeline.timeline-left .ms-timeline-item:nth-child(even) .timeline-detail .time,
+    #timeline.timeline-left .ms-timeline-item:nth-child(even) .timeline-detail .event,
+    #timeline.timeline-right .ms-timeline-item:nth-child(even) .timeline-detail .time,
+    #timeline.timeline-right .ms-timeline-item:nth-child(even) .timeline-detail .event {
+      padding-right: 0;
+      padding-left: 0;
+      text-align: center; } }

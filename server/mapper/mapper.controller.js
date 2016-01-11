@@ -27,6 +27,12 @@ exports.index = function (req, res) {
 				componenteURL: "eon_componentes/publicaciones/publicaciones.module.js"
 			}
 			break;
+		case 'fuse':
+			myJson = {
+				tipo: 'componente',
+				componenteURL: "eon_componentes/fuse_ui/fuse_ui.module.js"
+			}
+			break;
 		default:
 			var pagina = req.body.url.replace('/','');
 

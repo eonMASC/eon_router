@@ -9,7 +9,7 @@ function (angularAMD) {
     /**
      * Main module of the Fuse
      */
-    var Modulo = angular.module('fuse', [
+    var Modulo = angular.module('durango_angular', [
         // Core
         'app.core',
 
@@ -26,11 +26,10 @@ function (angularAMD) {
         'oc.lazyLoad'
     ]);
 
-    Modulo.config(routeConfig);        
-        
+    Modulo.config(routeConfig);         
 
     /** @ngInject */
-    function routeConfig($stateProvider, $urlRouterProvider, $locationProvider, msNavigationServiceProvider, $ocLazyLoadProvider)
+    function routeConfig($stateProvider, $urlRouterProvider, $locationProvider, $ocLazyLoadProvider, msNavigationServiceProvider)
     {
         $locationProvider.html5Mode(true);
 
@@ -38,27 +37,29 @@ function (angularAMD) {
           debug: true
         });
 
+        console.log('Configurado');
+
         //$urlRouterProvider.otherwise('/sample');
         $urlRouterProvider.otherwise(callBackOtherwise);
 
         // State definitions
         $stateProvider
-            .state('app', {
+            .state('sitio', {
                 abstract: true,
                 views   : {
                     'main@'         : {
                         templateUrl: 'app/core/layouts/vertical-navigation.html',
                         controller : 'MainController as vm'
                     },
-                    'toolbar@app'   : {
+                    'toolbar@sitio'   : {
                         templateUrl: 'app/toolbar/layouts/vertical-navigation/toolbar.html',
                         controller : 'ToolbarController as vm'
                     },
-                    'navigation@app': {
+                    'navigation@sitio': {
                         templateUrl: 'app/navigation/layouts/vertical-navigation/navigation.html',
                         controller : 'NavigationController as vm'
                     },
-                    'quickPanel@app': {
+                    'quickPanel@sitio': {
                         templateUrl: 'app/quick-panel/quick-panel.html',
                         controller : 'QuickPanelController as vm'
                     }
@@ -66,35 +67,70 @@ function (angularAMD) {
             });
 
         $stateProvider.state({
-            name: 'app.notfound',
+            name: 'sitio.notfound',
             url: '/404',
             views: {
-                'content@app': {
+                'content@sitio': {
                     templateUrl: 'views/404/404.html'                    
                 }
             }            
         });  
 
-        msNavigationServiceProvider.saveItem('fuse.publicaciones', {
+        msNavigationServiceProvider.saveItem('componentes', {
+            title      : 'Componentes',
+            group      : true,
+            icon       : 'icon-tile-four'
+        });
+
+         msNavigationServiceProvider.saveItem('publicaciones', {
             title      : 'Publicaciones',
+            icon       : 'icon-tile-four'
+        });
+
+        msNavigationServiceProvider.saveItem('publicaciones.listado', {
+            title      : 'Listado',
             icon       : 'icon-tile-four',
-            state      : 'app.publicaciones',
             url        : '/publicaciones'
         });
 
-         msNavigationServiceProvider.saveItem('fuse.PrimeraPagina', {
+        msNavigationServiceProvider.saveItem('publicaciones.nota1', {
+            title      : 'Publicacion de Martin',
+            icon       : 'icon-tile-four',
+            url        : '/publicaciones/martin'
+        });
+
+
+        msNavigationServiceProvider.saveItem('paginas', {
+            title      : 'Paginas',
+            group      : true,
+            icon       : 'icon-tile-four'
+        });
+
+        msNavigationServiceProvider.saveItem('paginas.primera', {
             title      : 'Primera Pagina',
             icon       : 'icon-tile-four',
-            state      : 'app.PrimeraPagina',
             url        : '/primera_pagina'
         });
 
-        msNavigationServiceProvider.saveItem('fuse.PubMartin', {
-            title      : 'Publicacion de Martin',
+        msNavigationServiceProvider.saveItem('paginas.segunda', {
+            title      : 'Segunda Pagina',
             icon       : 'icon-tile-four',
-            state      : 'app.PubMartin',
-            url        : '/publicaciones/martin'
+            url        : '/segunda_pagina'
         });
+
+        msNavigationServiceProvider.saveItem('paginas.ultima', {
+            title      : 'Ultima Pagina',
+            icon       : 'icon-tile-four',
+            url        : '/ultima_pagina'
+        });
+
+        msNavigationServiceProvider.saveItem('fuse_ui', {
+            title      : 'Fuse UI',
+            icon       : 'icon-tile-four',
+            url        : '/fuse'
+        });
+
+        
     }
 
 
@@ -119,6 +155,8 @@ function (angularAMD) {
             });
         });
 
+        console.log('Runeado');
+
         // Store state in the root scope for easy access
         $rootScope.state = $state;
 
@@ -138,10 +176,10 @@ function (angularAMD) {
 
             return {
                 addPageState: function(nombre, url, data) {
-                    $stateProvider.state('app.' + nombre, {
+                    $stateProvider.state('sitio.' + nombre, {
                         url: '/' + (nombre == 'pagina_inicio' ? '' : nombre) ,                          
                         views: {
-                            'content@app': {
+                            'content@sitio': {
                                 templateUrl: url,
                                 controller : 'PageViewerCtrl as vm',
                                 data: data
@@ -161,31 +199,22 @@ function (angularAMD) {
         //var $rootScope = $injector.get('$rootScope');
         var $newState = $injector.get('$newState');
 
-        var sState = $location.url();       
+        var sState = $location.url();    
+
+        console.log('Otherwiseado');   
 
         $http.post('/mapper/url', {url: $location.url()}).
             then(function success(respuesta){
 
-                //console.log('Respuesta: ',respuesta.data);
-
                 if(respuesta.data.success){
                   if(respuesta.data.map.tipo == 'componente'){
-                    console.log('Por cargar...');
-
-                    /*require([respuesta.data.map.componenteURL], function(componente){
-                        console.log('... cargado!', componente);
-                        //$urlRouter.sync();
-                    });*/
-
-                    /*define(['angularAMD', ], function (angularAMD) {
-                        angularAMD.processQueue();
-                        $urlRouter.sync();
-                    });*/
 
                     $ocLazyLoad.load(respuesta.data.map.componenteURL).then(function(){
-                        console.log('Refrescara');
+                        
                         $urlRouter.sync();
+
                     });
+
                   } else if(respuesta.data.map.tipo == 'pagina'){
                     $newState.addPageState(respuesta.data.map.nombre, respuesta.data.map.url, {titulo: respuesta.data.map.paginaTitulo});
                     $urlRouter.sync();
@@ -197,8 +226,7 @@ function (angularAMD) {
                 
     }
 
-    Modulo
-        .factory('api', apiService);
+    Modulo.factory('api', apiService);
 
     /** @ngInject */
     function apiService($resource)
@@ -215,6 +243,12 @@ function (angularAMD) {
             contacts  : $resource(api.baseUrl + 'quick-panel/contacts.json'),
             events    : $resource(api.baseUrl + 'quick-panel/events.json'),
             notes     : $resource(api.baseUrl + 'quick-panel/notes.json')
+        };
+
+        api.timeline = {
+            page1: $resource(api.baseUrl + 'timeline/page-1.json'),
+            page2: $resource(api.baseUrl + 'timeline/page-2.json'),
+            page3: $resource(api.baseUrl + 'timeline/page-3.json')
         };
 
         return api;
@@ -237,7 +271,7 @@ function (angularAMD) {
     }
 
     /** Control de Paginas Libres */
-    function PageViewerController($scope, $state, $ocLazyLoad)
+    function PageViewerController($scope, $state)
     {
         var vm = this;
 
@@ -261,6 +295,9 @@ function (angularAMD) {
             }
         });
     }
+
+    //var otro = angular.module('app.core');
+    //console.log('App Module: ', Modulo);    
 
     return angularAMD.bootstrap(Modulo);
 

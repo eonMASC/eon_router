@@ -41,7 +41,7 @@ function (angularAMD) {
                     var configState = {
                         url: url + params,
                         views  : {
-                            'content@app': {
+                            'content@sitio': {
                                 templateUrl: tplUrl,
                                 controller: controller + as                      
                             }
@@ -52,7 +52,7 @@ function (angularAMD) {
                     console.log(controller);
                     console.log(controllerUrl);*/  
                     console.log(configState);                  
-                    $stateProvider.state('app.' + name, 
+                    $stateProvider.state('sitio.' + name, 
                       angularAMD.route(configState)
                     );  
                     console.log("Estado y modos visual " + name + " registrado!");                  
