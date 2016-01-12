@@ -66,6 +66,84 @@ function (angularAMD) {
           }    
         }
       }); 
+
+/* NUEVO PROVIDER TO REGISTER STATES ***************************/
+modulo.provider("registerStatesNew", function($stateProvider){
+        var data;
+        var GLOBAL_STATE = "sitio";        
+        return {                  
+          $get: function($http, readerJSON, $state){
+            return function(objEstados){              
+              //readerJSON.getData(path + fileName).then(function(response){                
+                  
+                if(objEstados.length > 0){       
+                  angular.forEach(objEstados, function(estado, key){                                        
+                    
+                    var state_principal = ((angular.isDefined(estado.sitio_state) && estado.sitio_state !== "")? estado.sitio_state : GLOBAL_STATE) + ".";
+                    var state_tmp = (angular.isDefined(estado.state) && estado.state !== "")? angular.lowercase(estado.state) : "";
+                    var state = state_principal + state_tmp;
+
+                    var urlTmp = (angular.isDefined(estado.url) && estado.url !== "")? estado.url : "";
+                    var paramsTmp = (angular.isDefined(estado.params) && estado.params !== "")? estado.params : "";
+                    var url = urlTmp + paramsTmp;                    
+                    var VIEWS = estado.views;
+                    var vtmp = "", aControllers = [],v, c = 0, urlSubTpl = "";
+
+                    angular.forEach(VIEWS, function(view, key){
+                      //VIEWS
+                      var controlName = (angular.isDefined(view.name_controller))? view.name_controller : view.name.charAt(0).toUpperCase() + view.name.slice(1);
+                      //si usa name_controller usara el path completo a la vista html, si usa name armara la ruta a la vista (en componentes)
+                      if(angular.isDefined(view.name_controller)){ 
+
+                        urlSubTpl = view.path;                      
+                      } else {
+                        urlSubTpl = ((angular.isDefined(view.path) && view.path !== "")? view.path : (estado.path + view.name + '/'));                      
+                        urlSubTpl = urlSubTpl + view.name + ".html";
+                      }
+                      vtmp += '"'+view.at+'": {"templateUrl":"'+ urlSubTpl +'","controller":"'+controlName+'Controller as vm"}';
+                      
+                      vtmp += (VIEWS.length-1 == c)? "" : ",";
+                      c = c+1;
+                      //CONTROLLERS                      
+                      aControllers.push(estado.path + view.name +'/'+ view.name+'.controller.js');                    
+
+                    });                    
+                    v = JSON.parse("{" + vtmp + "}");                                                         
+                    // debugger;
+                    //*** RESOLVE PASSED AS A PARAMETER
+
+
+                    var configState = {
+                      //ulr = url,
+                      views : v,
+                      resolve: {
+                        loadCtrl: function($q){
+                          var deferred = $q.defer();
+                          require(aControllers, function(){   
+                            deferred.resolve();
+                          });
+                         return deferred.promise;
+                        }
+                      }
+                    }
+                    if(url !== "")
+                      configState.url = url;
+
+                    console.log(configState);
+                    $stateProvider.state(state, configState);                    
+                  }); 
+                  // debugger;                 
+                  console.log("***** Estado y modos visual " + name + " registrados!");                  
+
+                } else {
+                  console.log("xxxxx Error: no existe 'modos_visuales' en el json");
+                }
+              //});              
+            }
+          }    
+        }
+      }); 
+
     modulo.service('directiveLoader',["$ocLazyLoad",function($ocLazyLoad){
 
         var obj={

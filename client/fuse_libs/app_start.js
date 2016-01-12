@@ -126,8 +126,41 @@
 
         console.log('Rutas Config');
 
+        var configStates = {
+            "modos_visuales":[
+            {
+              "sitio_state":"app",
+              "state": "", // sitio.publicaciones
+              //"url": "/publicaciones",
+              "abstract":true,
+              "path": "",
+              "views": [
+                {
+                  "at":"main@",
+                  "name_controller":"Main",                  
+                  "path":"app/core/layouts/vertical-navigation.html"
+                },
+                {
+                  "at":"toolbar@app",
+                  "name_controller":"Toolbar",                  
+                  "path":"app/toolbar/layouts/vertical-navigation/toolbar.html"
+                },
+                {
+                  "at":"navigation@app",
+                  "name_controller":"Navigation",                  
+                  "path":"app/navigation/layouts/vertical-navigation/navigation.html"
+                },
+                {
+                  "at":"quickPanel@app",
+                  "name_controller":"QuickPanel",                  
+                  "path":"app/quick-panel/quick-panel.html"
+                }
+              ]
+            }           
+        ]};
+
         // State definitions
-        $stateProvider
+        /*$stateProvider
             .state('app', {
                 abstract: true,
                 views   : {
@@ -149,7 +182,7 @@
                     }
                 }
             });
-
+*/
         $stateProvider.state({
             name: 'app.notfound',
             url: '/404',

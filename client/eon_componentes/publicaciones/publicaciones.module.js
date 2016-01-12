@@ -1,5 +1,5 @@
 define([
-  //'eon_servicios/serviciosEON'
+  'eon_servicios/serviciosEON'
 ], 
 
 
@@ -15,8 +15,37 @@ function (){//,slidePublicaciones) {
     'ngMaterial',
     'ngMessages',
     'ngAria',
-    //'serviciosEON'
+    'serviciosEON'
   ]);
+  componente.constant("CONFIG",
+      {"modos_visuales":[
+        {
+          "sitio_state":"sitio",
+          "state": "publicaciones", // sitio.publicaciones
+          "url": "/publicaciones",
+          "path": "/eon_componentes/publicaciones/",
+          "views": [
+            {
+              "at":"content@sitio",
+              "name":"listado"
+            }
+          ]
+        },
+        {
+          "sitio_state":"sitio",
+          "state": "publicacionesficha", // sitio.publicaciones
+          "url": "/publicaciones/",
+          "params":":id",
+          "path": "/eon_componentes/publicaciones/",
+          "views": [
+            {
+              "at":"content@sitio",
+              "name":"ficha"
+            }
+          ]
+        }                
+     ]}
+  );
 
   componente.config(function ($stateProvider) {
 
@@ -33,7 +62,7 @@ function (){//,slidePublicaciones) {
 
      
    
-      $stateProvider.state('sitio.publicaciones', 
+    /*  $stateProvider.state('sitio.publicaciones', 
           {
             url: '/publicaciones',
             views  : {
@@ -73,22 +102,22 @@ function (){//,slidePublicaciones) {
               }
             }                               
           }
-        );
+        );*/
 
   });
 
-  // componente.run(function(directiveLoader,readerJSON, registerStates){
-  //   console.log("Modulo corriendo");
+  componente.run(function(directiveLoader,readerJSON, registerStatesNew, CONFIG){
+    console.log("************** Modulo publicaciones corriendo");
 
   //   // registro de estados de modos visuales del componente
-  //   registerStates('eon_componentes/publicaciones/','config.json');
+    registerStatesNew(CONFIG.modos_visuales);
 
   //   var $confg = readerJSON.getData("/eon_componentes/publicaciones/config.json").then(function(response){
       
   //     directiveLoader.load(response.data.directives);
   //   }); 
 
-  // });
+   });
 
   return componente;
 
