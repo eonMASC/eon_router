@@ -25,7 +25,8 @@
             // Sample
             'app.sample',
 
-            'oc.lazyLoad'
+            'oc.lazyLoad',
+            'serviciosEON'
         ]);
 })();
 
@@ -117,7 +118,7 @@
     }
 
     /** @ngInject */
-    function routeConfig($stateProvider, $urlRouterProvider, $locationProvider, msNavigationServiceProvider)
+    function routeConfig($stateProvider, $urlRouterProvider, $locationProvider, msNavigationServiceProvider, registerStatesNew)
     {
         $locationProvider.html5Mode(true);
 
@@ -126,8 +127,7 @@
 
         console.log('Rutas Config');
 
-        var configStates = {
-            "modos_visuales":[
+        var configStates = [
             {
               "sitio_state":"app",
               "state": "", // sitio.publicaciones
@@ -156,8 +156,21 @@
                   "path":"app/quick-panel/quick-panel.html"
                 }
               ]
+            },
+            {
+              "sitio_state":"app",
+              "state": "notfound", // sitio.publicaciones
+              "url": "/404",
+              "abstract":true,
+              "path": "",
+              "views": {
+                  "at":"content@app",                  
+                  "path":"views/404/404.html"
+                }
             }           
-        ]};
+        ];
+        alert("ahora a registrar estados");
+        registerStatesNew(configStates);
 
         // State definitions
         /*$stateProvider
@@ -183,7 +196,7 @@
                 }
             });
 */
-        $stateProvider.state({
+        /*$stateProvider.state({
             name: 'app.notfound',
             url: '/404',
             views: {
@@ -191,7 +204,7 @@
                     templateUrl: 'views/404/404.html'                    
                 }
             }            
-        });  
+        });  */
 
         msNavigationServiceProvider.saveItem('fuse.publicaciones', {
             title      : 'Publicaciones',

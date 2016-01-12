@@ -90,25 +90,38 @@ modulo.provider("registerStatesNew", function($stateProvider){
                     var vtmp = "", aControllers = [],v, c = 0, urlSubTpl = "";
 
                     angular.forEach(VIEWS, function(view, key){
-                      //VIEWS
                       var controlName = (angular.isDefined(view.name_controller))? view.name_controller : view.name.charAt(0).toUpperCase() + view.name.slice(1);
-                      //si usa name_controller usara el path completo a la vista html, si usa name armara la ruta a la vista (en componentes)
-                      if(angular.isDefined(view.name_controller)){ 
+
+                      //VIEWS
+                      //si llega name_controller usara el path completo a la vista html, 
+                      //si llega name armara la ruta a la vista (en componentes)
+                      //si no llega name, ni name_controller solo es templateUrl
+                      if(angular.isDefined(view.name_controller)){ // si name_controller
 
                         urlSubTpl = view.path;                      
-                      } else {
+                        vtmp += '"'+view.at+'": {"templateUrl":"'+ urlSubTpl +'","controller":"'+controlName+'Controller as vm"}';
+                        aControllers.push(estado.path + view.name +'/'+ view.name+'.controller.js');                    
+
+                      } else if(angular.isDefined(view.name)) { // componentes
+                        
                         urlSubTpl = ((angular.isDefined(view.path) && view.path !== "")? view.path : (estado.path + view.name + '/'));                      
                         urlSubTpl = urlSubTpl + view.name + ".html";
+                        vtmp += '"'+view.at+'": {"templateUrl":"'+ urlSubTpl +'","controller":"'+controlName+'Controller as vm"}';                        
+                        //CONTROLLERS                      
+                        aControllers.push(estado.path + view.name +'/'+ view.name+'.controller.js');                    
+
+                      } else {  //solo template
+                        vtmp += '"'+view.at+'": {"templateUrl":"'+ urlSubTpl +'"}';
                       }
-                      vtmp += '"'+view.at+'": {"templateUrl":"'+ urlSubTpl +'","controller":"'+controlName+'Controller as vm"}';
                       
                       vtmp += (VIEWS.length-1 == c)? "" : ",";
                       c = c+1;
-                      //CONTROLLERS                      
-                      aControllers.push(estado.path + view.name +'/'+ view.name+'.controller.js');                    
 
                     });                    
+// debugger;
                     v = JSON.parse("{" + vtmp + "}");                                                         
+                    console.log("CONTROLLERS: ",aControllers);
+                    console.log("OBJETO: ",v);
                     // debugger;
                     //*** RESOLVE PASSED AS A PARAMETER
 
@@ -133,7 +146,7 @@ modulo.provider("registerStatesNew", function($stateProvider){
                     $stateProvider.state(state, configState);                    
                   }); 
                   // debugger;                 
-                  console.log("***** Estado y modos visual " + name + " registrados!");                  
+                  console.log("***** Estados" + name + " registrados!");                  
 
                 } else {
                   console.log("xxxxx Error: no existe 'modos_visuales' en el json");

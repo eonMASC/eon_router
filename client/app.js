@@ -43,6 +43,8 @@ function (angularAMD) {
         $urlRouterProvider.otherwise(callBackOtherwise);
 
         // State definitions
+      /*  console.log("ANTES DE REGISTRAR STATES");
+        debugger;*/
         $stateProvider
             .state('sitio', {
                 abstract: true,
