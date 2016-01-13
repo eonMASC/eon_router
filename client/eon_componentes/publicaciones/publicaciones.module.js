@@ -26,6 +26,14 @@ function (){//,slidePublicaciones) {
           "views":{
               "content@sitio":"listado",                                       
               //"listado@sitio":"minilista-" ///// con - no usaria control                                       
+          },
+          "resolve": {
+            test: function(){
+              alert("test function en resolve para el modo visual listado publicaciones");
+            },
+            mifuncion: function(){
+              console.log("Hola mundo funcion ejemploe")
+            }
           }          
         },
         {          
