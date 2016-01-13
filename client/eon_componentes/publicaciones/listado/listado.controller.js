@@ -1,9 +1,9 @@
 define(['eon_componentes/publicaciones/publicaciones.module'], function (componente) {
 
-   componente.controller('ListadoController', function ($scope, $ocLazyLoad) {
+   componente.controller('ListadoController', function ($scope) {
       var vm = this;       
       //$ocLazyLoad.load(['./eon_dependencias/royal_slider/royal_slider.js']).t;            
-      console.log("CONTROL ListadoCtrl corriendo!");
+      console.log("CONTROL ListadoController corriendo!");
         
        
        $scope.handle = function(){

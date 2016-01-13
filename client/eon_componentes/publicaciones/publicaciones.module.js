@@ -19,35 +19,28 @@ function (){//,slidePublicaciones) {
   ]);
   componente.constant("CONFIG",
       {"modos_visuales":[
-        {
-          "sitio_state":"sitio",
-          "state": "publicaciones", // sitio.publicaciones
+        {          
+          "state": "sitio.publicaciones", // sitio.publicaciones
           "url": "/publicaciones",
           "path": "/eon_componentes/publicaciones/",
-          "views": [
-            {
-              "at":"content@sitio",
-              "name":"listado"
-            }
-          ]
+          "views":{
+              "content@sitio":"listado",                                       
+              //"listado@sitio":"minilista-" ///// con - no usaria control                                       
+          }          
         },
-        {
-          "sitio_state":"sitio",
-          "state": "publicacionesficha", // sitio.publicaciones
+        {          
+          "state": "sitio.publicacionesficha", // sitio.publicaciones
           "url": "/publicaciones/",
           "params":":id",
           "path": "/eon_componentes/publicaciones/",
-          "views": [
-            {
-              "at":"content@sitio",
-              "name":"ficha"
-            }
-          ]
+          "views":{
+              "content@sitio":"ficha"
+          }          
         }                
      ]}
   );
 
-  componente.config(function ($stateProvider) {
+  componente.config(function ($stateProvider, registraEstadosProvider, CONFIG) {
 
       //console.log('Publicaciones Config');
 
@@ -58,9 +51,8 @@ function (){//,slidePublicaciones) {
       //   views: {
       //     'content@sitio':'listado'
       //   }
-      // });
-
-     
+      // });         
+          registraEstadosProvider.add(CONFIG.modos_visuales);
    
     /*  $stateProvider.state('sitio.publicaciones', 
           {
@@ -106,11 +98,11 @@ function (){//,slidePublicaciones) {
 
   });
 
-  componente.run(function(directiveLoader,readerJSON, registerStatesNew, CONFIG){
+  componente.run(function(){
     console.log("************** Modulo publicaciones corriendo");
 
   //   // registro de estados de modos visuales del componente
-    registerStatesNew(CONFIG.modos_visuales);
+//    registraEstadosProvider.add(CONFIG.modos_visuales);
 
   //   var $confg = readerJSON.getData("/eon_componentes/publicaciones/config.json").then(function(response){
       

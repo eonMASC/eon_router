@@ -25,8 +25,7 @@
             // Sample
             'app.sample',
 
-            'oc.lazyLoad',
-            'serviciosEON'
+            'oc.lazyLoad'
         ]);
 })();
 
@@ -118,62 +117,16 @@
     }
 
     /** @ngInject */
-    function routeConfig($stateProvider, $urlRouterProvider, $locationProvider, msNavigationServiceProvider, registerStatesNew)
+    function routeConfig($stateProvider, $urlRouterProvider, $locationProvider, msNavigationServiceProvider)
     {
         $locationProvider.html5Mode(true);
 
         //$urlRouterProvider.otherwise('/sample');
         $urlRouterProvider.otherwise(callBackOtherwise);
 
-        console.log('Rutas Config');
-
-        var configStates = [
-            {
-              "sitio_state":"app",
-              "state": "", // sitio.publicaciones
-              //"url": "/publicaciones",
-              "abstract":true,
-              "path": "",
-              "views": [
-                {
-                  "at":"main@",
-                  "name_controller":"Main",                  
-                  "path":"app/core/layouts/vertical-navigation.html"
-                },
-                {
-                  "at":"toolbar@app",
-                  "name_controller":"Toolbar",                  
-                  "path":"app/toolbar/layouts/vertical-navigation/toolbar.html"
-                },
-                {
-                  "at":"navigation@app",
-                  "name_controller":"Navigation",                  
-                  "path":"app/navigation/layouts/vertical-navigation/navigation.html"
-                },
-                {
-                  "at":"quickPanel@app",
-                  "name_controller":"QuickPanel",                  
-                  "path":"app/quick-panel/quick-panel.html"
-                }
-              ]
-            },
-            {
-              "sitio_state":"app",
-              "state": "notfound", // sitio.publicaciones
-              "url": "/404",
-              "abstract":true,
-              "path": "",
-              "views": {
-                  "at":"content@app",                  
-                  "path":"views/404/404.html"
-                }
-            }           
-        ];
-        alert("ahora a registrar estados");
-        registerStatesNew(configStates);
 
         // State definitions
-        /*$stateProvider
+        $stateProvider
             .state('app', {
                 abstract: true,
                 views   : {
@@ -195,8 +148,8 @@
                     }
                 }
             });
-*/
-        /*$stateProvider.state({
+
+        $stateProvider.state({
             name: 'app.notfound',
             url: '/404',
             views: {
@@ -204,7 +157,7 @@
                     templateUrl: 'views/404/404.html'                    
                 }
             }            
-        });  */
+        });  
 
         msNavigationServiceProvider.saveItem('fuse.publicaciones', {
             title      : 'Publicaciones',
