@@ -10,7 +10,7 @@ function () {
   modulo.provider("registraEstados", function($stateProvider){
         var data;
         var GLOBAL_STATE = "sitio";      
-        this.addModovisual = function(objEstados){                            
+        this.addModovisual = function(objEstados){                                     
              
             if(objEstados.length > 0){       
               angular.forEach(objEstados, function(estado, key){                                                        
@@ -75,7 +75,7 @@ function () {
                        return deferred.promise;
                       }
                     }
-                }
+                }                 
                 // merge resolve if view config has it --------------------
                 if(angular.isDefined(estado.resolve)){
                     configState.resolve = angular.merge({}, configState.resolve, estado.resolve); 
@@ -108,7 +108,7 @@ function () {
                 }                           
             });
         },
-        this.$get = function(){
+        this.$get = function($http){
           return {
             addModovisual:addModovisual,
             addPage:addPage
