@@ -31,14 +31,23 @@ function () {
                 for(v in VIEWS){
 
                     // at = where it'll draw it and declarate of other variables --------------------                  
-                    var at = v, objView = "", view, urlTemplate = "";
+                    var at = v, objView = "", view, urlTemplate = "", urlController = "";
                     // Has "-" load controller to view --------------------
                     var hasController = (VIEWS[v].indexOf("-") > -1)? false : true;  
                     // Has "-" remove it of name view --------------------
                     view = (VIEWS[v].indexOf("-") > -1)? VIEWS[v].replace("-", "") : VIEWS[v];
                     // url template --------------------
-                    var urlTemplate = estado.path + view +'/'+ view+'.html';
-                    var urlController = estado.path + view +'/'+ view+'.controller.js';
+                    var tmpViewMain;
+                    if(c > 0){ 
+                      console.log("CONTADOR: ", c);
+                        urlTemplate = estado.path + tmpViewMain +'/'+ view+'.html';
+                    } else {
+                        // the first view is the main of the state                        
+                        tmpViewMain = view;
+                        urlTemplate = estado.path + view +'/'+ view+'.html';
+                    }
+
+                    urlController = estado.path + view +'/'+ view+'.controller.js';
                     
                     if(hasController){
                      // array de controllers por vista de un estado --------------------
@@ -80,7 +89,7 @@ function () {
                     configState.abstract = abstract;
                 //registrar estados --------------------
                 $stateProvider.state(state, configState); 
-                                   
+
               });                             
 
             } else {

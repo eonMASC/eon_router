@@ -24,17 +24,16 @@ function (){//,slidePublicaciones) {
           "url": "/publicaciones",
           "path": "/eon_componentes/publicaciones/",
           "views":{
-              "content@sitio":"listado",                                       
-              //"listado@sitio":"minilista-" ///// con - no usaria control                                       
+              "content@sitio":"listado"                                                     
           },
           "resolve": {
             test: function(){
-              alert("test function en resolve para el modo visual listado publicaciones");
+              console.log("hola que hace");
             },
             mifuncion: function(){
-              console.log("Hola mundo funcion ejemploe")
+              console.log("aqui haciendo merge en resolve para publicaciones")
             }
-          }          
+          }         
         },
         {          
           "state": "sitio.publicacionesficha", // sitio.publicaciones
@@ -42,7 +41,8 @@ function (){//,slidePublicaciones) {
           "params":":id",
           "path": "/eon_componentes/publicaciones/",
           "views":{
-              "content@sitio":"ficha"
+              "content@sitio":"ficha",
+              "simontas@sitio.publicacionesficha":"otras_publicaciones-" ///// con - no usaria control                                       
           }          
         }                
      ]}
