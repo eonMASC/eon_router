@@ -1,7 +1,7 @@
-define(['eon_componentes/fuse_ui/fuse_ui.module'], function (componente) {
-//define(['angularAMD'], function (angularAMD) {
+//define(['eon_componentes/fuse_ui/fuse_ui.module'], function (componente) {
+define(['angularAMD'], function (angularAMD) {
 
-    componente.controller('TimelineCtrl', TimelineController);
+    angularAMD.controller('TimelineCtrl', TimelineController);
         
     /** @ngInject */
     function TimelineController($q, api, Timeline)
