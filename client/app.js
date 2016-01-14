@@ -1,5 +1,6 @@
 define([
-    'angularAMD'
+    'angularAMD',
+    'eon_servicios/serviciosEON'
 ], 
 
 function (angularAMD) {
@@ -23,7 +24,10 @@ function (angularAMD) {
         'app.quick-panel',
 
         // ocLazyLoad
-        'oc.lazyLoad'
+        'oc.lazyLoad',
+
+        // ocLazyLoad
+        'serviciosEON'
     ]);
 
     Modulo.config(routeConfig);         

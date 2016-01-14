@@ -60,7 +60,7 @@ function (){//,slidePublicaciones) {
       //     'content@sitio':'listado'
       //   }
       // });         
-          registraEstadosProvider.add(CONFIG.modos_visuales);
+          registraEstadosProvider.addModovisual(CONFIG.modos_visuales);
    
     /*  $stateProvider.state('sitio.publicaciones', 
           {

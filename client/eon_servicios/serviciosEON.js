@@ -9,8 +9,8 @@ function () {
 /* NUEVO PROVIDER TO REGISTER STATES ***************************/
   modulo.provider("registraEstados", function($stateProvider){
         var data;
-        var GLOBAL_STATE = "sitio"        
-        this.add = function(objEstados){                            
+        var GLOBAL_STATE = "sitio";      
+        this.addModovisual = function(objEstados){                            
              
             if(objEstados.length > 0){       
               angular.forEach(objEstados, function(estado, key){                                                        
@@ -96,12 +96,55 @@ function () {
               console.log("xxxxx Error: no existe 'modos_visuales' en el json");
             }                                  
         },
+        this.addPage = function(nombre, url, data) {
+            $stateProvider.state('sitio.' + nombre, {
+                url: '/' + (nombre == 'pagina_inicio' ? '' : nombre) ,                          
+                views: {
+                    'content@sitio': {
+                        templateUrl: url,
+                        controller : 'PageViewerCtrl as vm',
+                        data: data
+                    }
+                }                           
+            });
+        },
         this.$get = function(){
           return {
-            add: add
+            addModovisual:addModovisual,
+            addPage:addPage
           }
         }
       }); 
+
+ /**
+    *   SERVICIO CARGADOR DE RECURSOS CSS, SCSS Y JS 
+    *   @param array files
+    *   @param string ruta 
+    */
+    modulo.service("cargarRecurso", ["$http", "$ocLazyLoad", function($http, $ocLazyLoad){
+        var resource = {       
+          loadCSS: function($path){
+            var parts = $path.split("/");            
+            var nameFile = parts[parts.length-2];
+                
+            return $ocLazyLoad.load(GLOBAL_PATH + 'media_loader/' + $path + 'all_'+nameFile+'.css');                       
+          },
+          loadJS: function($path){
+            var parts = $path.split("/");            
+            var nameFile = parts[parts.length-2];
+                
+            return $ocLazyLoad.load(GLOBAL_PATH + 'media_loader/' + $path + 'all_'+nameFile+'.js');            
+            /*then(function(){
+                  console.log("***** se cargaron " + $type + " MODO VISUAL "+ $path +" con exito ");
+            });              */
+          },
+          loadSCSS: function($path){
+            return;
+          }
+        }
+        return resource;
+
+    }]);
 
     modulo.service('directiveLoader',["$ocLazyLoad",function($ocLazyLoad){
 
