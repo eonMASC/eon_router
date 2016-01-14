@@ -130,7 +130,7 @@
         .config(config);
 
     /** @ngInject */
-    function config($ariaProvider, $logProvider, msScrollConfigProvider, uiGmapGoogleMapApiProvider, $translateProvider, $provide, fuseConfigProvider)
+    function config($ariaProvider, $logProvider, msScrollConfigProvider, uiGmapGoogleMapApiProvider, $provide, fuseConfigProvider)
     {
         // ng-aria configuration
         $ariaProvider.config({
@@ -159,11 +159,11 @@
         });
 
         // angular-translate configuration
-        $translateProvider.useLoader('$translatePartialLoader', {
-            urlTemplate: '{part}/i18n/{lang}.json'
-        });
-        $translateProvider.preferredLanguage('en');
-        $translateProvider.useSanitizeValueStrategy('sanitize');
+        // $translateProvider.useLoader('$translatePartialLoader', {
+        //     urlTemplate: '{part}/i18n/{lang}.json'
+        // });
+        // $translateProvider.preferredLanguage('en');
+        // $translateProvider.useSanitizeValueStrategy('sanitize');
 
         // Text Angular options
         $provide.decorator('taOptions', [

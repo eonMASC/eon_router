@@ -52,14 +52,13 @@ function (){//,slidePublicaciones) {
 
                     // initialize a Sass instance
                     var sass = new Sass();
+                  console.log('cargo SCSS', archivo.data);
 
-                    //console.log('cargo SCSS', archivo.data);
+                  sass.compile(archivo.data, function(result) {
+                    //console.log(result);
 
-                    sass.compile(archivo.data, function(result) {
-                      console.log(result);
-
-                      if(result.status == 0){
-                        //console.log('compilo CSS', result.text);
+                    if(result.status == 0){
+                      console.log('compilo CSS', result.text);
 
                         $("<style type='text/css'>" + result.text + "</style>").appendTo("head");
 

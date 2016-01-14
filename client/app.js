@@ -275,7 +275,7 @@ function (angularAMD) {
     }
 
     /** Control de Paginas Libres */
-    function PageViewerController($scope, $state)
+    function PageViewerController($scope, $state, $ocLazyLoad)
     {
         var vm = this;
 
@@ -284,7 +284,7 @@ function (angularAMD) {
     }
 
     /** Control Principal de interfaz FUSE */
-    function MainController($scope, $rootScope)
+    function MainController($scope, $rootScope, msUtils)
     {
         // Data
 

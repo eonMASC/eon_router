@@ -14,7 +14,6 @@ require.config({
     'angular_core' : 'fuse_libs/angular_core',
     'angular_sortable' : 'fuse_libs/angular_sortable',
     'angular_graficas' : 'fuse_libs/angular_graficas',
-    'angular_translate' : 'fuse_libs/angular_translate',
     'angular_varios' : 'fuse_libs/angular_varios',
     'angular_textangular' : 'fuse_libs/angular_textangular',
 
@@ -62,7 +61,6 @@ require.config({
 
     'fuse_core_start' : [          
         'angular_core',
-        'angular_translate', 
         'angular_sortable', 
         'angular_graficas', 
         'angular_textangular',
