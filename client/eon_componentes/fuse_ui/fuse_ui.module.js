@@ -33,15 +33,17 @@ function (){//,slidePublicaciones) {
               Timeline : function (apiResolver){
                   return apiResolver.resolve('timeline.page1@get');
               },                           
-              loadSCSS : function ($http, $q, $ocLazyLoad){
-
+              loadSCSS : function ($http, $q, $ocLazyLoad, cargarRecurso){                  
                   var compileSCSS = false;
 
                   if(!compileSCSS){
                     return $ocLazyLoad.load('eon_componentes/fuse_ui/timeline/timeline.css');
-                  } 
-
+                  }                   
                   var deferred = $q.defer();
+                  cargarRecurso.loadSCSS('eon_componentes/fuse_ui/timeline/timeline.scss').then(function(response){return deferred.promise;});
+                  /*
+
+                    var deferred = $q.defer();
 
                   $http.get('eon_componentes/fuse_ui/timeline/timeline.scss').then(function(archivo) {
                     
@@ -70,6 +72,7 @@ function (){//,slidePublicaciones) {
                     });                  
                   });
                   return deferred.promise;
+                  */
               } 
           }    
         }       

@@ -1,6 +1,7 @@
 // factory to read a json file
 define([
   //'app.includes', 
+  'sass.js'
 ], 
 function () {
 
@@ -121,7 +122,7 @@ function () {
     *   @param array files
     *   @param string ruta 
     */
-    modulo.service("cargarRecurso", ["$http", "$ocLazyLoad", function($http, $ocLazyLoad){
+    modulo.service("cargarRecurso", ["$http", "$ocLazyLoad", "$q", function($http, $ocLazyLoad, $q){
         var resource = {       
           loadCSS: function($path){
             var parts = $path.split("/");            
@@ -138,8 +139,33 @@ function () {
                   console.log("***** se cargaron " + $type + " MODO VISUAL "+ $path +" con exito ");
             });              */
           },
-          loadSCSS: function($path){
-            return;
+          loadSCSS: function(sFile){
+            var urlWorker = "bower_components/sass.js/dist/sass.worker.js";
+            var deferred = $q.defer();
+              if(sFile !== ""){ //                     
+                        $http.get(sFile).then(function(archivo) {
+
+                          var Sass = require('sassjs');
+                          Sass.setWorkerUrl(urlWorker);
+                          // initialize a Sass instance
+                          var sass = new Sass();                          
+                          sass.compile(archivo.data, function(result) {                            
+                            if(result.status == 0){   
+                                sFile = sFile.substring(sFile.lastIndexOf('/')+1);
+                                $("<style type='text/css' data-owner='" + sFile + "'>" + result.text + "</style>").appendTo("head");                                
+                                deferred.resolve();
+                            } else {
+                                console.log(result);
+                            }
+                                
+                          });
+
+                        });                                            
+                      return deferred.promise;
+              } else {
+                console.log("xxx Error: no se encontraron archivos .scss");
+              } 
+
           }
         }
         return resource;
